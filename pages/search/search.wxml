@@ -1,0 +1,12 @@
+<view class="search">
+  <input placeholder="请输入要搜索的书名" class="search-input"/>
+  <image src="../../images/search.png" class="search-image"></image>
+</view>
+<view class="recommend-title">
+  <text class="recommend-text">推荐</text>
+  <view class="recommend-box">
+    <view class="recommend" wx:for="{{recommend}}">
+      <text>{{item}}</text>
+    </view>
+  </view>
+</view>

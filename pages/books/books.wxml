@@ -1,0 +1,14 @@
+<!--pages/books/books.wxml-->
+<view class="title">
+    <image src="../../images/search.png"></image>
+    <image src="../../images/list.png"></image>
+</view>
+<view class="box">
+    <view class="book-box" wx:for="{{books}}" wx:key="index">
+        <image src="{{item.img}}"></image>
+        <text>{{item.name}}</text>
+    </view>
+    <view class="bookadd" bindtap='gotoBookCity'>
+        <image src="../../images/BBB.jpg"></image>
+    </view>
+</view>

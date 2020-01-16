@@ -1,0 +1,14 @@
+<view class="left">
+  <view wx:for="{{list}}" wx:key="index" class="list">
+    <text>{{item}}</text>
+  </view>
+</view>
+<view class="right">
+    <view wx:for="{{books}}" wx:key="index" class="booklist">
+        <image src="{{item.src}}" class="img"></image>
+        <view class="bookinformation">
+          <text class="name">{{index+1}}.{{item.name}}</text>
+          <view class="author"><text>作者：{{item.author}}</text></view>
+        </view>
+    </view>
+</view>
