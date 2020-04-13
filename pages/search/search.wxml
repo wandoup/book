@@ -5,7 +5,8 @@
 <view class="recommend-title">
   <text class="recommend-text">推荐</text>
   <view class="recommend-box">
-    <view class="recommend" wx:for="{{recommend}}">
+    <view class="recommend" wx:for="{{recommend}}" wx:key="index"
+          bindtap="gotodetails">
       <text>{{item}}</text>
     </view>
   </view>

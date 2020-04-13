@@ -4,11 +4,12 @@
     <image src="../../images/list.png"></image>
 </view>
 <view class="box">
-    <view class="book-box" wx:for="{{books}}" wx:key="index">
+    <view class="book-box" wx:for="{{books}}" wx:key="index"
+          bindtap="gotodetails">
         <image src="{{item.img}}"></image>
-        <text>{{item.name}}</text>
+        <text>{{item.aname}}</text>
     </view>
     <view class="bookadd" bindtap='gotoBookCity'>
-        <image src="../../images/BBB.jpg"></image>
+        <image src="../../images/increase.png"></image>
     </view>
 </view>

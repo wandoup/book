@@ -4,7 +4,11 @@
   </view>
 </view>
 <view class="right">
-    <view wx:for="{{books}}" wx:key="index" class="booklist">
+    <view wx:for="{{books}}" wx:key="index" 
+          class="booklist" bindtap="gotodetails"
+          data-bookname="{{item.name}}"
+          data-bookauthor="{{item.author}}"
+          >
         <image src="{{item.src}}" class="img"></image>
         <view class="bookinformation">
           <text class="name">{{index+1}}.{{item.name}}</text>

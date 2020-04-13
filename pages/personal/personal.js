@@ -5,14 +5,32 @@ Page({
    * 页面的初始数据
    */
   data: {
+    information:[
+      {
+        src:"../../images/time.png",
+        text:"阅读历史",
+        name:"history"
+      },
+      {
+        src: "../../images/star.png",
+        text: "我的收藏",
+        name: "collection"
+      }
+    ]
 
+  },
+  gotocollection:function(event){
+    var e = event.currentTarget.dataset.listname;
+    wx.navigateTo({
+      url: `../${e}/${e}`,
+    })
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    
   },
 
   /**

@@ -4,19 +4,27 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
-		"autoAudits": false,
 		"coverView": true,
+		"autoAudits": false,
 		"showShadowRootInWxmlPanel": true,
-		"scopeDataCheck": false
+		"scopeDataCheck": false,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		}
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.10.0",
-	"appid": "wxaa660d7ef26dfb98",
+	"appid": "wx418a740320fb648f",
 	"projectname": "miniprogram",
 	"debugOptions": {
 		"hidedInDevtools": []
@@ -66,6 +74,34 @@
 					"id": -1,
 					"name": "personal",
 					"pathName": "pages/personal/personal",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "details",
+					"pathName": "pages/details/details",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "read",
+					"pathName": "pages/read/read",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "catalog",
+					"pathName": "pages/catalog/catalog",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/history/history",
+					"pathName": "pages/history/history",
 					"query": "",
 					"scene": null
 				}

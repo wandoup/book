@@ -1,0 +1,24 @@
+<view class="details">
+  <image src="../../images/C3.jpg" class="details-img"></image>
+  <view class="details-na">
+    <view class="details-name">
+      <text>{{name}}</text>
+    </view>
+    <view class="details-author">
+      <text>{{author}}</text>
+    </view>
+  </view>
+</view>
+<view class="introduction">
+  <text>简介</text>
+</view>
+<view class="catalog-box" bindtap="gotocatalog">
+  <text class="catalog">查看目录</text>
+  <text class="catalog-text">最后更新:2019-12-16</text>
+  <image src="../../images/arrow_right.png" class="catalog-img"></image>
+</view>
+<view class="details-list">
+  <text class="details-download">下载书籍</text>
+  <text class="details-read" bindtap="gotoread">阅读</text>
+  <text class="details-add">加入书架</text>
+</view>

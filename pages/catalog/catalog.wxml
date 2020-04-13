@@ -1,0 +1,8 @@
+<view>
+  <view class="catalog-name">
+    <text>琅琊榜</text>
+  </view>
+  <view class="catalog" wx:for="{{catalog}}" wx:key="index">
+    <text>{{item}}</text>
+  </view>
+</view>

@@ -1,0 +1,18 @@
+.box{
+  padding:20rpx;
+}
+.name{
+  font-size:28rpx;
+  color: rgba(0, 0, 0, 0.6);
+}
+.title{
+  height:100rpx;
+  font-size: 38rpx;
+  font-weight:bold;
+  margin-top: 20rpx;
+  overflow: hidden;
+}
+.content{
+  line-height:60rpx;
+  margin-top:20rpx;
+}

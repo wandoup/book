@@ -1,27 +1,37 @@
-// pages/search/search.js
-var geto = require('../common/common.js'); 
+// pages/details/details.js
 Page({
 
   /**
    * 页面的初始数据
    */
+
   data: {
-    recommend:[
-      "极品全能高手", "星动乾坤", "带着美女去修仙", "超神宠物兽",
-       "斗罗大陆", "带个系统打鬼子", "武侠之最强BOSS", "从特种兵开始崛起",
-       "十亿次拔刀", "西游之开局就举报"
-    ]
-
+    name:[],
+    author:[],
   },
 
-  gotodetails: function () {
-    geto.gotodetails();
+  gotoread:function(){
+    wx.navigateTo({
+      url: '../read/read',
+    })
   },
-
+  
+  gotocatalog:function(){
+    wx.navigateTo({
+      url: '../catalog/catalog',
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var dname = JSON.parse(options.bookname);
+    var dauthor = JSON.parse(options.bookauthor);
+
+    this.setData({
+      name: dname,
+      author: dauthor
+    })
 
   },
 
@@ -29,7 +39,6 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
   },
 
   /**

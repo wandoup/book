@@ -5,40 +5,45 @@
     "pages/search/search",
     "pages/logs/logs",
     "pages/BookCity/BookCity",
-    "pages/personal/personal"
+    "pages/personal/personal",
+    "pages/details/details",
+    "pages/read/read",
+    "pages/catalog/catalog",
+    "pages/history/history",
+    "pages/collection/collection"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#ccc",
-    "navigationBarTitleText": "WeChat",
+    "navigationBarTitleText": "豌豆炮OvO",
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
     "color":"#000",
-    "selectedColor":"#faf",
+    "selectedColor":"#e8989a",
     "list": [
       {
         "pagePath": "pages/books/books",
         "text": "书架",
-        "iconPath": "./images/1.jpeg",
-        "selectedIconPath": "./images/1.jpeg"
+        "iconPath": "./images/books.png",
+        "selectedIconPath": "./images/bookscl.png"
       },{
         "pagePath": "pages/BookCity/BookCity",
         "text": "书城",
-        "iconPath": "./images/1.jpeg",
-        "selectedIconPath": "./images/1.jpeg"
+        "iconPath": "./images/city.png",
+        "selectedIconPath": "./images/citycl.png"
       },
       {
         "pagePath": "pages/search/search",
         "text": "搜索",
-        "iconPath": "./images/1.jpeg",
-        "selectedIconPath": "./images/1.jpeg"
+        "iconPath": "./images/tabsearch.png",
+        "selectedIconPath": "./images/tabsearchcl.png"
       },
       {
         "pagePath": "pages/personal/personal",
         "text": "我的",
-        "iconPath": "./images/1.jpeg",
-        "selectedIconPath": "./images/1.jpeg"
+        "iconPath": "./images/personal.png",
+        "selectedIconPath": "./images/personalcl.png"
       }
     ]
   },

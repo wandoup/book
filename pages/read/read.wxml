@@ -1,0 +1,11 @@
+<view class="box" wx:for="{{book}}" wx:key="index">
+  <view class="name">
+    <text>{{book.name}}</text>
+  </view>
+  <view class="title">
+    <text>{{book.title}}</text>
+  </view>
+  <scroll-view class="content">
+    <view>{{book.content}}</view>
+  </scroll-view>
+</view>

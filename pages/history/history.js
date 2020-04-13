@@ -1,21 +1,28 @@
-// pages/search/search.js
-var geto = require('../common/common.js'); 
+// pages/history/history.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    recommend:[
-      "极品全能高手", "星动乾坤", "带着美女去修仙", "超神宠物兽",
-       "斗罗大陆", "带个系统打鬼子", "武侠之最强BOSS", "从特种兵开始崛起",
-       "十亿次拔刀", "西游之开局就举报"
+    history: [
+      {
+        name: '万古最强宗',
+        author: '江湖再见',
+      }, {
+        name: '修真聊天群',
+        author: '圣骑士传说',
+      }, {
+        name: '万古神帝',
+        author: '飞天鱼',
+      }, {
+        name: '谍影风云',
+        author: '寻青藤',
+      }, {
+        name: '明天下',
+        author: '子与',
+      },
     ]
-
-  },
-
-  gotodetails: function () {
-    geto.gotodetails();
   },
 
   /**

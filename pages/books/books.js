@@ -1,4 +1,5 @@
 // pages/books/books.js
+var geto = require('../common/common.js'); 
 Page({
 
   /**
@@ -6,54 +7,83 @@ Page({
    */
   data: {
     books:[
-      {
-        img:'../../images/AAA.jpg',
-        name:'1'},
-      {
-        img: '../../images/AAA.jpg',
-        name: '2'
-      }, {
-        img: '../../images/AAA.jpg',
-        name: '3'
-      }, {
-        img: '../../images/AAA.jpg',
-        name: '4'
-      }, {
-        img: '../../images/AAA.jpg',
-        name: '5'
-      }, {
-        img: '../../images/AAA.jpg',
-        name: '6'
-      }, {
-        img: '../../images/AAA.jpg',
-        name: '7'
-      },{
-        img: '../../images/AAA.jpg',
-        name: '8'
-      },{
-        img: '../../images/AAA.jpg',
-        name: '9'
-      },{
-        img: '../../images/AAA.jpg',
-        name: '10'
-      }
+         {
+           img:null,
+           aname:null
+         },
+      // {
+      //   img:'../../images/AAA.jpg',
+      //   name:'1'},
+      // {
+      //   img: '../../images/AAA.jpg',
+      //   name: '2'
+      // }, {
+      //   img: '../../images/AAA.jpg',
+      //   name: '3'
+      // }, {
+      //   img: '../../images/AAA.jpg',
+      //   name: '4'
+      // }, {
+      //   img: '../../images/AAA.jpg',
+      //   name: '5'
+      // }, {
+      //   img: '../../images/AAA.jpg',
+      //   name: '6'
+      // }, {
+      //   img: '../../images/AAA.jpg',
+      //   name: '7'
+      // },{
+      //   img: '../../images/AAA.jpg',
+      //   name: '8'
+      // },{
+      //   img: '../../images/AAA.jpg',
+      //   name: '9'
+      // },{
+      //   img: '../../images/AAA.jpg',
+      //   name: '10'
+      // }
     ],
 
   },
-  
+
   gotoBookCity: function () {
     wx.switchTab({
       url: '../BookCity/BookCity'
     })
   },
-  
 
+  gotodetails:function(){
+    geto.gotodetails();
+  },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+      var than=this;
+      wx.request({
+      url: 'https://m.ytool.top/user/markcp/index',
+      data: {user_id:1},
+      method: 'GET',
+      dataType: 'json',
+      responseType: 'text',
+      success: function(res) {
+        console.log('访问成功')
+        for(var i=0;i<res.data.length;i++){
+          // var iimg="books["+ index +"].img";
+          // than.data.books.img.push(res.data[i].novel.cover)
+          than.setData({
+            ['books[' + i + '].img']: res.data[i].novel.cover,
+            ['books[' + i + '].aname']: res.data[i].novel.name
+          })
+        }
+      },
+      fail: function(res) {
+        console.log('失败')
+      },
+      complete: function(res) {},
+    })
+    
   },
 
   /**

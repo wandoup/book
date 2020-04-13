@@ -1,4 +1,5 @@
 // pages/BookCity/BookCity.js
+var geto = require('../common/common.js'); 
 Page({
 
   /**
@@ -25,30 +26,41 @@ Page({
         author: "变异"
       },
       {
-        src: "../../images/C4.jpg",
+        src: "../../images/C3.jpg",
         name: "诡异之主",
         author: "爱潜水的乌贼"
       },{
-        src: "../../images/C5.jpg",
+        src: "../../images/C2.jpg",
         name: "斗罗大陆",
         author: "唐家三少"
       },
       {
-        src: "../../images/C6.jpg",
+        src: "../../images/C1.jpg",
         name: "从斗罗开始打卡",
         author: "夏竖琴"
       }, {
-        src: "../../images/C7.jpg",
+        src: "../../images/C3.jpg",
         name: "极品全能高手",
         author: "花都大少"
       },
       {
-        src: "../../images/C8.jpg",
+        src: "../../images/C1.jpg",
         name: "圣墟",
         author: "辰东"
       }
     ]
 
+  },
+
+  gotodetails: function (e) {
+    let name = e.currentTarget.dataset.bookname;
+    let author = e.currentTarget.dataset.bookauthor;
+    let dname = JSON.stringify(name);
+    let dauthor = JSON.stringify(author);
+    wx.navigateTo({
+      url: '../details/details?bookname=' + dname + "&bookauthor=" + dauthor,
+    })
+    // console.log()
   },
 
   /**
