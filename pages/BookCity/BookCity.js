@@ -1,5 +1,7 @@
 // pages/BookCity/BookCity.js
 var geto = require('../common/common.js'); 
+var num=1;
+var id=3;
 Page({
 
   /**
@@ -8,66 +10,112 @@ Page({
   data: {
     list:[
       "玄幻", "奇幻", "武侠", "仙侠", "都市", 
-      "现实", "历史", "军事", "游戏", "科幻", "悬疑"
+       "历史", "军事", "游戏","竞技","科幻", "灵异","其他"
     ],
-    books:[
-      {
-        src:"../../images/C1.jpg",
-        name:"垂钓之神",
-        author:"会狼叫的猪"
-      },
-      {
-        src: "../../images/C2.jpg",
-        name: "第一序列",
-        author: "会说话的肘子"
-      },{
-        src: "../../images/C3.jpg",
-        name: "九星毒奶",
-        author: "变异"
-      },
-      {
-        src: "../../images/C3.jpg",
-        name: "诡异之主",
-        author: "爱潜水的乌贼"
-      },{
-        src: "../../images/C2.jpg",
-        name: "斗罗大陆",
-        author: "唐家三少"
-      },
-      {
-        src: "../../images/C1.jpg",
-        name: "从斗罗开始打卡",
-        author: "夏竖琴"
-      }, {
-        src: "../../images/C3.jpg",
-        name: "极品全能高手",
-        author: "花都大少"
-      },
-      {
-        src: "../../images/C1.jpg",
-        name: "圣墟",
-        author: "辰东"
-      }
-    ]
+    listcss:'玄幻',
+    books:[{
+      src:"",
+      name:"",
+      author:"",
+      bookid:"",
+    },]
 
   },
 
-  gotodetails: function (e) {
-    let name = e.currentTarget.dataset.bookname;
-    let author = e.currentTarget.dataset.bookauthor;
-    let dname = JSON.stringify(name);
-    let dauthor = JSON.stringify(author);
-    wx.navigateTo({
-      url: '../details/details?bookname=' + dname + "&bookauthor=" + dauthor,
+  touch:function(e){
+    console.log(e)
+    this.setData({
+      listcss: e.currentTarget.dataset.listtitle
     })
-    // console.log()
+    var than = this;
+    id=e.currentTarget.dataset.num;
+    wx.request({
+      url: 'https://api.ytool.top/api/novellist',
+      data: {cate_id:id},
+      method: 'GET',
+      dataType: 'json',
+      responseType: 'text',
+      success: function (res) {
+        console.log('获取书籍成功')
+        console.log(res)
+        if (res.data.data.length > 0) {
+          than.data.books.splice(0,than.data.books.length)
+          than.setData({
+            books:than.data.books
+          })
+          for (var i = 0; i < res.data.data.length; i++) {
+            than.setData({
+              ['books[' + i + '].src']:
+                res.data.data[i].cover.replace(/http:/g, 'https:'),
+              ['books[' + i + '].name']:
+                res.data.data[i].name,
+              ['books[' + i + '].author']:
+                res.data.data[i].author.name,
+              ['books[' + i + '].bookid']:
+                res.data.data[i].id,
+            })
+          }
+        }
+        if (wx.pageScrollTo) {
+          wx.pageScrollTo({
+            scrollTop: 0
+          })
+        } else {
+          wx.showModal({
+            title: '提示',
+            content: '当前微信版本过低，请升级到最新微信版本后重试。'
+          })
+        }
+      },
+      fail: function (res) {
+        console.log('失败')
+      },
+      complete: function (res) { },
+    })
+  },
+
+  gotodetails: function (e) {
+    let id = e.currentTarget.dataset.bookid;
+    let did = JSON.stringify(id);
+    wx.navigateTo({
+      url: '../details/details?bookid=' + did,
+    })
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    var than=this;
+    wx.request({
+      url: 'https://api.ytool.top/api/novellist',
+      data: { cate_id: 3, page:num},
+      method: 'GET',
+      dataType: 'json',
+      responseType: 'text',
+      success: function (res) {
+        console.log('获取书籍成功')
+        console.log(res)
+        if (res.data.data.length > 0) {
+          for (var i = 0; i < res.data.data.length; i++) {
+            than.setData({
+              ['books[' + i + '].src']:
+                res.data.data[i].cover.replace(/http:/g, 'https:'),
+              ['books[' + i + '].name']:
+                res.data.data[i].name,
+              ['books[' + i + '].author']:
+                res.data.data[i].author.name,
+              ['books[' + i + '].bookid']:
+                res.data.data[i].id,
+            })
+          }
+        }
+      },
+      fail: function (res) {
+        console.log('失败')
+      },
+      complete: function (res) { },
+    })
   },
 
   /**
@@ -109,7 +157,59 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    var than = this;
+    num++
+    wx.request({
+      url: 'https://api.ytool.top/api/novellist',
+      data: { cate_id: id,page:num },
+      method: 'GET',
+      dataType: 'json',
+      responseType: 'text',
+      success: function (res) {
+        if(res.data.code=1){
+          console.log('获取书籍成功')
+          console.log(res)
+          if (res.data.data.length > 0) {
+            than.data.books.splice(0, than.data.books.length)
+            than.setData({
+              books: than.data.books
+            })
+            for (var i = 0; i < res.data.data.length; i++) {
+              than.setData({
+                ['books[' + i + '].src']:
+                  res.data.data[i].cover.replace(/http:/g, 'https:'),
+                ['books[' + i + '].name']:
+                  res.data.data[i].name,
+                ['books[' + i + '].author']:
+                  res.data.data[i].author.name,
+                ['books[' + i + '].bookid']:
+                  res.data.data[i].id,
+              })
+            }
+          }
+          if (wx.pageScrollTo) {
+            wx.pageScrollTo({
+              scrollTop: 0
+            })
+          } else {
+            wx.showModal({
+              title: '提示',
+              content: '当前微信版本过低，请升级到最新微信版本后重试。'
+            })
+          }
+        }else{
+          wx.showToast({
+            title: '此分类下暂无小说',
+            icon: 'none',
+            duration: 3000
+          })
+        }
+      },
+      fail: function (res) {
+        console.log('失败')
+      },
+      complete: function (res) { },
+    })
   },
 
   /**

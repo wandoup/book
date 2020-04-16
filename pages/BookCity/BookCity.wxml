@@ -1,15 +1,17 @@
 <view class="left">
-  <view wx:for="{{list}}" wx:key="index" class="list">
-    <text>{{item}}</text>
+  <view wx:for="{{list}}" wx:key="index" 
+  class='{{listcss==item?"list-touch":"list"}}'
+  bindtap="touch" data-listtitle="{{item}}"
+  data-num="{{index+3}}">
+    <text >{{item}}</text>
   </view>
 </view>
 <view class="right">
     <view wx:for="{{books}}" wx:key="index" 
           class="booklist" bindtap="gotodetails"
-          data-bookname="{{item.name}}"
-          data-bookauthor="{{item.author}}"
+          data-bookid="{{item.bookid}}"
           >
-        <image src="{{item.src}}" class="img"></image>
+        <image wx:if="{{item.src}}" src="{{item.src}}" class="img"></image>
         <view class="bookinformation">
           <text class="name">{{index+1}}.{{item.name}}</text>
           <view class="author"><text>作者：{{item.author}}</text></view>

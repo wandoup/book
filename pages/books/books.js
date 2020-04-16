@@ -1,5 +1,10 @@
 // pages/books/books.js
 var geto = require('../common/common.js'); 
+var header;
+var novelId;
+var chapterId;
+var aname;
+var num;
 Page({
 
   /**
@@ -8,42 +13,74 @@ Page({
   data: {
     books:[
          {
-           img:null,
-           aname:null
-         },
-      // {
-      //   img:'../../images/AAA.jpg',
-      //   name:'1'},
-      // {
-      //   img: '../../images/AAA.jpg',
-      //   name: '2'
-      // }, {
-      //   img: '../../images/AAA.jpg',
-      //   name: '3'
-      // }, {
-      //   img: '../../images/AAA.jpg',
-      //   name: '4'
-      // }, {
-      //   img: '../../images/AAA.jpg',
-      //   name: '5'
-      // }, {
-      //   img: '../../images/AAA.jpg',
-      //   name: '6'
-      // }, {
-      //   img: '../../images/AAA.jpg',
-      //   name: '7'
-      // },{
-      //   img: '../../images/AAA.jpg',
-      //   name: '8'
-      // },{
-      //   img: '../../images/AAA.jpg',
-      //   name: '9'
-      // },{
-      //   img: '../../images/AAA.jpg',
-      //   name: '10'
-      // }
-    ],
+           img:'',
+           aname:'',
+           novel_id:'',
+           chapter_id:''
 
+      }, 
+    ],
+    isShow:[
+      "display: none"
+    ],
+    delbox:false,
+
+  },
+  bindTouchStart: function (e) {
+    this.startTime = e.timeStamp;
+  },
+  bindTouchEnd: function (e) {
+    this.endTime = e.timeStamp;
+  },
+
+  del:function(e){
+    this.setData({
+      delbox: true
+    })
+    novelId = e.currentTarget.dataset.novelid;
+  },
+
+  butyes:function(){
+    var than = this;
+    wx.getStorage({
+      key: 'token',
+      success: function (res) {
+        header = {
+          'content-type': 'application/json',
+          'token': res.data
+        }
+        wx.request({
+          url: 'https://api.ytool.top/api/mark',
+          data: { novel_id: novelId},
+          method: 'DELETE',
+          dataType: 'json',
+          responseType: 'text',
+          header: header,
+          success: function (res) {
+            console.log('移出书架成功')
+            than.setData({
+              delbox: false
+            })
+            console.log(than.data.books)
+            than.data.books.splice(than.data.books.length-1, 1)
+            than.setData({
+              books: than.data.books
+            })
+            than.onShow()
+          },
+          fail: function (res) {
+            console.log('失败')
+          },
+          complete: function (res) { },
+        })
+      }
+    })
+  },
+
+  butno:function(){
+    this.setData({
+      delbox:false,
+    })
   },
 
   gotoBookCity: function () {
@@ -52,40 +89,29 @@ Page({
     })
   },
 
-  gotodetails:function(){
-    geto.gotodetails();
+  gotoread:function(e){
+    var than=this;
+    if (than.endTime - than.startTime < 350) {
+      console.log("点击")
+      novelId=e.currentTarget.dataset.novelid;
+      aname=e.currentTarget.dataset.name;
+      chapterId = e.currentTarget.dataset.chapterid;
+      let jname = JSON.stringify(aname);
+      let jnovelid = JSON.stringify(novelId);
+      let jchapterid = JSON.stringify(chapterId);
+      wx.navigateTo({
+        url: '../read/read?novel_id=' + jnovelid + '&chapter_id=' + jchapterid + '&name=' + jname
+      })
+    }
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-      var than=this;
-      wx.request({
-      url: 'https://m.ytool.top/user/markcp/index',
-      data: {user_id:1},
-      method: 'GET',
-      dataType: 'json',
-      responseType: 'text',
-      success: function(res) {
-        console.log('访问成功')
-        for(var i=0;i<res.data.length;i++){
-          // var iimg="books["+ index +"].img";
-          // than.data.books.img.push(res.data[i].novel.cover)
-          than.setData({
-            ['books[' + i + '].img']: res.data[i].novel.cover,
-            ['books[' + i + '].aname']: res.data[i].novel.name
-          })
-        }
-      },
-      fail: function(res) {
-        console.log('失败')
-      },
-      complete: function(res) {},
-    })
-    
+      
   },
-
+   
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -97,7 +123,48 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    var than = this;
+    wx.getStorage({
+      key: 'token',
+      success: function (res) {
+          header = {
+            'content-type': 'application/json',
+            'token': res.data
+          }
+          wx.request({
+            url: 'https://api.ytool.top/api/mark',
+            method: 'GET',
+            dataType: 'json',
+            responseType: 'text',
+            header: header,
+            success: function (res) {
+              console.log('获取书架成功')
+              console.log(res)
+              if (res.data.data.length > 0) {
+                for (var i = 0; i < res.data.data.length; i++) {
+                  than.setData({
+                    ['books[' + i + '].img']:
+                      res.data.data[i].novel.cover.replace(/http:/g, 'https:'),
+                    ['books[' + i + '].aname']:
+                      res.data.data[i].novel.name,
+                    ['books[' + i + '].novel_id']:
+                      res.data.data[i].novel_id,
+                    ['books[' + i + '].chapter_id']:
+                      res.data.data[i].chapter_id
+                  })
+                }
+                than.setData({
+                  isShow: "display: block"
+                })
+              }
+            },
+            fail: function (res) {
+              console.log('失败')
+            },
+            complete: function (res) { },
+          })
+        }
+    })
   },
 
   /**

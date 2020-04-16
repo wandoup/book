@@ -1,11 +1,11 @@
 {
   "pages": [
+    "pages/personal/personal",
     "pages/books/books",
     "pages/index/index",
     "pages/search/search",
     "pages/logs/logs",
     "pages/BookCity/BookCity",
-    "pages/personal/personal",
     "pages/details/details",
     "pages/read/read",
     "pages/catalog/catalog",
@@ -17,6 +17,7 @@
     "navigationBarBackgroundColor": "#ccc",
     "navigationBarTitleText": "豌豆炮OvO",
     "navigationBarTextStyle": "black"
+
   },
   "tabBar": {
     "color":"#000",

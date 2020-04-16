@@ -22,11 +22,22 @@
   color: rgba(0, 0, 0, 0.7);
   margin-top: 120rpx;
 }
-.introduction{
+.introduction-box{
   padding:20rpx;
   border-bottom:1rpx solid rgba(0, 0, 0, 0.2);
-  height:300rpx;
+  height:310rpx;
+}
+.introduction{
+  color:rgba(0, 0, 0, 0.6);
+  display:  -webkit-box;
+  font-size:30rpx;
+  line-height:34rpx;
+  margin-top:2rpx;
   overflow: hidden;
+  text-overflow:ellipsis;
+  -webkit-line-clamp: 8;
+  -webkit-box-orient:vertical;
+  word-break:break-all;
 }
 .catalog-box{
   padding:20rpx;

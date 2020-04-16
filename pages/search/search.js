@@ -1,21 +1,83 @@
 // pages/search/search.js
 var geto = require('../common/common.js'); 
+var inputvalue;
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    recommend:[
-      "极品全能高手", "星动乾坤", "带着美女去修仙", "超神宠物兽",
-       "斗罗大陆", "带个系统打鬼子", "武侠之最强BOSS", "从特种兵开始崛起",
-       "十亿次拔刀", "西游之开局就举报"
+    books:[
+      {
+        img: "",
+        name: "",
+        author: "",
+        id:'',
+      },
+    ],
+    isShow: [
+      "display: none"
     ]
 
   },
-
+  
   gotodetails: function () {
     geto.gotodetails();
+  },
+  
+  inputval:function(e){
+    inputvalue=e.detail.value
+    console.log(inputvalue)
+  },
+
+  gotodetails: function (e) {
+    let id = e.currentTarget.dataset.bookid;
+    let did = JSON.stringify(id);
+    wx.navigateTo({
+      url: '../details/details?bookid=' + did,
+    })
+  },
+
+  search:function(){
+    wx.showLoading({
+      title: '搜索中',
+    })
+    var than = this;
+    wx.request({
+      url: 'https://api.ytool.top/api/search?=仙&=2',
+      data:{key:inputvalue},
+      method: 'GET',
+      dataType: 'json',
+      responseType: 'text',
+      success(res){
+        console.log('搜索成功')
+        console.log(res)
+        if (res.data.data.length > 0) {
+          for (var i = 0; i < res.data.data.length; i++) {
+            than.setData({
+              ['books[' + i + '].img']:
+                res.data.data[i].cover,
+              ['books[' + i + '].name']:
+                res.data.data[i].name,
+              ['books[' + i + '].author']:
+                res.data.data[i].author.name,
+              ['books[' + i + '].id']:
+              res.data.data[i].id,
+            })
+          }
+          than.setData({
+            isShow: "display: block"
+          })
+        }
+      },
+      fail: function (res) {
+        console.log('搜索失败')
+        console.log(res)
+      },
+      complete: function (res) {
+        wx.hideLoading()
+      },
+    })
   },
 
   /**

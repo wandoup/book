@@ -4,7 +4,7 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": false,
+		"urlCheck": true,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
@@ -103,6 +103,12 @@
 					"name": "pages/history/history",
 					"pathName": "pages/history/history",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/books/books",
+					"pathName": "pages/books/books",
 					"scene": null
 				}
 			]

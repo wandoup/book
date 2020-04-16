@@ -16,6 +16,14 @@
   line-height: 60rpx;
   text-align:center;
 }
+.list-touch{
+  width:80%;
+  padding:10%;
+  height:60rpx;
+  line-height: 60rpx;
+  text-align:center;
+  background: #fff;
+}
 .right{
   float:right;
   width:80%;
