@@ -58,8 +58,8 @@
   width:100%;
 }
 .menu{
-  width:100%;
-  height:100%;
+  width:60%;
+  height:90%;
   position:fixed;
   top:0;
   left:0;
@@ -104,24 +104,3 @@
   color:rgb(255, 255, 255);
   background:rgba(245, 125, 125, 1);
 }
-/* .fontdown{
-  width:25%;
-  line-height:120rpx;
-  font-size:32rpx;
-  text-align: center;
-  color:red;
-}
-.fontup{
-  width:25%;
-  line-height:120rpx;
-  font-size:32rpx;
-  text-align: center;
-  color:red;
-}
-.BackG{
-  width:25%;
-  line-height:120rpx;
-  font-size:32rpx;
-  text-align: center;
-  color:red;
-} */

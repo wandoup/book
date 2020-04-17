@@ -1,4 +1,4 @@
-<view class="{{night==true?'box bgnight':'box'}}" style="{{isShow}}" >
+<view class="{{night==true?'box bgnight':'box'}}" style="{{isShow}}">
   <image src="../../images/background.jpg" class="bg"></image>
   <view class="nav">
     <image src="../../images/navbg.jpg" class="nav-bg"></image>
@@ -10,10 +10,11 @@
   <view class="title">
     <text>{{book.title}}</text>
   </view>
-  <view class="content">
+  <scroll-view class="content" scroll-y="true" style="height:550px"    
+       lower-threshold="100" bindscrolltolower="going">
     <text class="content-text" style="{{fontsize}}"
-    decode="{{true}}">{{book.content}}</text>
-  </view>
+    decode="{{true}}">{{book.content}}</text> 
+  </scroll-view>
   <view class="menu" bindtap="menushow"></view>
   <view class="buttonbox" wx:if="{{menuShow}}">
     <view class="buttontitle">

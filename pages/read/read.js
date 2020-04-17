@@ -201,6 +201,70 @@ Page({
     console.log(height)
   },
 
+  going:function(){
+    var windowHeight = wx.getSystemInfoSync().windowHeight;
+    console.log(windowHeight)
+    var than=this;
+    num++;
+    wx.showLoading({
+      title: '加载中',
+      mask: true
+    });
+    wx.getStorage({
+      key: 'token',
+      success: function (res) {
+        header = {
+          'content-type': 'application/json',
+          'token': res.data
+        }
+    wx.request({
+      url: 'https://api.ytool.top/api/content?novel_id=7168&chapter_id=1',
+      data: { novel_id: novelidSave, chapter_id: id + num},
+      header: header,
+      method: 'GET',
+      dataType: 'json',
+      responseType: 'text',
+      success: function (res) {
+        if (res.data.code == 0) {
+          console.log('获取数据失败')
+          num--
+        }else{
+          console.log(num)
+          console.log('访问成功')
+          console.log(res)
+          var content = res.data.data.data.chapter.content;
+          content = content.replace(/<p>/g, '&nbsp;&nbsp;&nbsp;&nbsp;');
+          content = content.replace(/<\/p>/g, '\n');
+          than.setData({
+            ['book.title']: res.data.data.data.chapter.name, 
+            // ['book.content']:content,
+            ['book.content']: than.data.book.content.concat(content),
+            isShow: "display:block"
+          })
+        }
+          // 页面置顶
+        // if (wx.pageScrollTo) {
+        //   wx.pageScrollTo({
+        //     scrollTop: 0
+        //   })
+        // } else {
+        //   wx.showModal({
+        //     title: '提示',
+        //     content: '当前微信版本过低，请升级到最新微信版本后重试。'
+        //   })
+        // }
+      },
+      fail: function (res) {
+        console.log('失败')
+      },
+      complete: function (res) {
+        wx.hideLoading();
+      },
+    })
+      }
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -209,8 +273,10 @@ Page({
     var chapterId = JSON.parse(options.chapter_id);
     var aname = JSON.parse(options.name);
     var than=this;
+    var windowHeight = wx.getSystemInfoSync().windowHeight;
     num=0;
     novelidSave = novelId;
+    console.log(windowHeight)
     wx.showLoading({
       title: '加载中',
       mask: true
@@ -247,6 +313,17 @@ Page({
       dataType: 'json',
       responseType: 'text',
       success: function (res) {
+        if(res.data.code==0){
+          console.log('获取数据失败')
+          wx.navigateBack({
+            delta: 1
+          })
+          wx.showToast({
+            title: '加载失败',
+            icon: 'none',
+            duration: 3000
+          })
+        }else{
         console.log('访问成功')
         console.log(res)
         id = res.data.data.data.chapter.id;
@@ -261,6 +338,7 @@ Page({
             ['book.content']: content,
             isShow:"display:block"
           })
+      } 
       },
       fail: function (res) {
         console.log('失败')
@@ -312,60 +390,67 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    var than=this;
-    num++;
-    wx.showLoading({
-      title: '加载中',
-      mask: true
-    });
-    wx.getStorage({
-      key: 'token',
-      success: function (res) {
-        header = {
-          'content-type': 'application/json',
-          'token': res.data
-        }
-    wx.request({
-      url: 'https://api.ytool.top/api/content?novel_id=7168&chapter_id=1',
-      data: { novel_id: novelidSave, chapter_id: id + num},
-      header: header,
-      method: 'GET',
-      dataType: 'json',
-      responseType: 'text',
-      success: function (res) {
-        console.log(num)
-        console.log('访问成功')
-        console.log(res)
-        var content = res.data.data.data.chapter.content;
-        content = content.replace(/<p>/g, '&nbsp;&nbsp;&nbsp;&nbsp;');
-        content = content.replace(/<\/p>/g, '\n');
-        than.setData({
-          ['book.title']: res.data.data.data.chapter.name, 
-          // ['book.content']:content,
-          ['book.content']: than.data.book.content.concat(content),
-          isShow: "display:block"
-        })
-          // 页面置顶
-        // if (wx.pageScrollTo) {
-        //   wx.pageScrollTo({
-        //     scrollTop: 0
-        //   })
-        // } else {
-        //   wx.showModal({
-        //     title: '提示',
-        //     content: '当前微信版本过低，请升级到最新微信版本后重试。'
-        //   })
-        // }
-      },
-      fail: function (res) {
-        console.log('失败')
-      },
-      complete: function (res) {
-        wx.hideLoading();
-      },
-    })
-      }
-    })
+    // var windowHeight = wx.getSystemInfoSync().windowHeight;
+    // console.log(windowHeight)
+    // var than=this;
+    // num++;
+    // wx.showLoading({
+    //   title: '加载中',
+    //   mask: true
+    // });
+    // wx.getStorage({
+    //   key: 'token',
+    //   success: function (res) {
+    //     header = {
+    //       'content-type': 'application/json',
+    //       'token': res.data
+    //     }
+    // wx.request({
+    //   url: 'https://api.ytool.top/api/content?novel_id=7168&chapter_id=1',
+    //   data: { novel_id: novelidSave, chapter_id: id + num},
+    //   header: header,
+    //   method: 'GET',
+    //   dataType: 'json',
+    //   responseType: 'text',
+    //   success: function (res) {
+    //     if (res.data.code == 0) {
+    //       console.log('获取数据失败')
+    //       num--
+    //     }else{
+    //       console.log(num)
+    //       console.log('访问成功')
+    //       console.log(res)
+    //       var content = res.data.data.data.chapter.content;
+    //       content = content.replace(/<p>/g, '&nbsp;&nbsp;&nbsp;&nbsp;');
+    //       content = content.replace(/<\/p>/g, '\n');
+    //       than.setData({
+    //         ['book.title']: res.data.data.data.chapter.name, 
+    //         // ['book.content']:content,
+    //         ['book.content']: than.data.book.content.concat(content),
+    //         isShow: "display:block"
+    //       })
+    //     }
+    //       // 页面置顶
+    //     // if (wx.pageScrollTo) {
+    //     //   wx.pageScrollTo({
+    //     //     scrollTop: 0
+    //     //   })
+    //     // } else {
+    //     //   wx.showModal({
+    //     //     title: '提示',
+    //     //     content: '当前微信版本过低，请升级到最新微信版本后重试。'
+    //     //   })
+    //     // }
+    //   },
+    //   fail: function (res) {
+    //     console.log('失败')
+    //   },
+    //   complete: function (res) {
+    //     wx.hideLoading();
+    //   },
+    // })
+    //   }
+    // })
   },
 
   /**
