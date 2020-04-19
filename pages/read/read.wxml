@@ -10,11 +10,10 @@
   <view class="title">
     <text>{{book.title}}</text>
   </view>
-  <scroll-view class="content" scroll-y="true" style="height:550px"    
-       lower-threshold="100" bindscrolltolower="going">
+  <view class="content">
     <text class="content-text" style="{{fontsize}}"
     decode="{{true}}">{{book.content}}</text> 
-  </scroll-view>
+  </view>
   <view class="menu" bindtap="menushow"></view>
   <view class="buttonbox" wx:if="{{menuShow}}">
     <view class="buttontitle">
