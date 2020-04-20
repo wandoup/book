@@ -65,13 +65,14 @@ Page({
             console.log(num)
             console.log('访问成功')
             console.log(res)
-            var content = res.data.data.data.chapter.content;
+            var content = res.data.data.chapter.content;
             content = content.replace(/<p>/g, '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
             content = content.replace(/<\/p>/g, '\n');
+            content = content.replace(/<br \/>\n<br \/>\n|<br\/><br\/>|<br \/><br \/>/g, '\n'); 
             content = content.replace(/“/g, '"');
             content = content.replace(/”/g, '"');
             than.setData({
-              ['book.title']: res.data.data.data.chapter.name,
+              ['book.title']: res.data.data.chapter.name,
               ['book.content']: content,
               isShow: "display:block"
             })
@@ -123,13 +124,14 @@ Page({
             console.log(num)
             console.log('访问成功')
             console.log(res)
-            var content = res.data.data.data.chapter.content;
+            var content = res.data.data.chapter.content;
             content = content.replace(/<p>/g, '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
             content = content.replace(/<\/p>/g, '\n');
+            content = content.replace(/<br \/>\n<br \/>\n|<br\/><br\/>|<br \/><br \/>/g, '\n');
             content = content.replace(/“/g, '"');
             content = content.replace(/”/g, '"');
             than.setData({
-              ['book.title']: res.data.data.data.chapter.name,
+              ['book.title']: res.data.data.chapter.name,
               ['book.content']: content,
               isShow: "display:block"
             })
@@ -266,10 +268,11 @@ Page({
         }else{
         console.log('访问成功')
         console.log(res)
-        id = res.data.data.chapter.id;
+        id = res.data.data.chapter.order_id;
         var content = res.data.data.chapter.content;
         content = content.replace(/<p>/g, '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
         content = content.replace(/<\/p>/g, '\n');
+        content = content.replace(/<br \/>\n<br \/>\n|<br\/><br\/>|<br \/><br \/>/g, '\n');
         content = content.replace(/“/g, '"');
         content = content.replace(/”/g, '"');
           than.setData({
@@ -330,8 +333,6 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    var windowHeight = wx.getSystemInfoSync().windowHeight;
-    console.log(windowHeight)
     var than=this;
     num++;
     wx.showLoading({
@@ -363,15 +364,17 @@ Page({
           console.log(res)
           var content = res.data.data.chapter.content;
           content = content.replace(/<p>/g, '&nbsp;&nbsp;&nbsp;&nbsp;');
+          content = content.replace(/<br \/>\n<br \/>\n|<br\/><br\/>|<br \/><br \/>/g, '\n');
           content = content.replace(/<\/p>/g, '\n');
+          // console.log(than)
           than.setData({
             ['book.title']: res.data.data.chapter.name, 
             // ['book.content']:content,
-            ['book.content']: than.book.content.concat(content),
+            ['book.content']: than.data.book.content.concat(content),
             isShow: "display:block"
           })
         }
-          // 页面置顶
+        // 页面置顶
         // if (wx.pageScrollTo) {
         //   wx.pageScrollTo({
         //     scrollTop: 0

@@ -14,6 +14,7 @@
   top:0;
   left:0;
   z-index: -1;
+  background:rgba(206, 186, 151,1);
 }
 .nav{
   position: fixed;
@@ -21,7 +22,14 @@
   left:0;
   width:100%;
   height:35rpx;
-  background: #c3ac80;
+  background:rgba(206, 186, 151,1);
+}
+.navnight{
+  position: fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:35rpx;
 }
 .nav-bg{
   width:100%;

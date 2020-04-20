@@ -1,7 +1,8 @@
 <view class="{{night==true?'box bgnight':'box'}}" style="{{isShow}}">
-  <image src="../../images/background.jpg" class="bg"></image>
-  <view class="nav">
-    <image src="../../images/navbg.jpg" class="nav-bg"></image>
+  <!-- <image src="../../images/background.jpg" class="bg"></image> -->
+  <view class="bg"></view>
+  <view class="{{night==true?'navnight':'nav'}}">
+    <!-- <image src="../../images/navbg.jpg" class="nav-bg"></image> -->
   </view>
   <view class="frame"></view>
   <view class="name">
