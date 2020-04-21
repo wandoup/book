@@ -10,8 +10,9 @@ page{
   width:350rpx;
   height:200rpx;
   border: 1rpx solid #000;
-  background: rgba(228, 134, 134, 0.8);
+  background: rgba(228, 134, 134, 0.6);
   border-radius:10rpx;
+  box-shadow:1px 1px 2px 2px rgba(34, 31, 31, 0.5);
 }
 .del{
   font-size:32rpx;

@@ -26,9 +26,11 @@ Page({
     delbox:false,
 
   },
+  //获取用户按下的时间
   bindTouchStart: function (e) {
     this.startTime = e.timeStamp;
   },
+  //获取用户离开的时间
   bindTouchEnd: function (e) {
     this.endTime = e.timeStamp;
   },
