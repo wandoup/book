@@ -1,12 +1,14 @@
 <!--pages/books/books.wxml-->
-<view class="delete-box" wx:if="{{delbox}}">
-    <view class="del">
-      <text>是否将本书移出书架</text>
-    </view>
-    <view class="but-box">
-      <view class="yes" bindtap="butyes">确定</view>
-      <view class="no" bindtap="butno">取消</view>
-    </view>
+<view class="delout-box" wx:if="{{delbox}}">
+  <view class="delete-box">
+      <view class="del">
+        <text>是否将本书移出书架</text>
+      </view>
+      <view class="but-box">
+        <view class="yes" bindtap="butyes">确定</view>
+        <view class="no" bindtap="butno">取消</view>
+      </view>
+  </view>
 </view>
 <view class="box">
     <view class="book-box" wx:for="{{books}}" wx:key="index"
