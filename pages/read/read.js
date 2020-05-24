@@ -378,8 +378,9 @@ Page({
           content = content.replace(/”/g, '"');
           // console.log(than)
           than.setData({
-            ['book.title']: res.data.data.chapter.name, 
+            // ['book.title']: than.data.book.title.concat(res.data.data.chapter.name), 
             // ['book.content']:content,
+            ['book.title']: res.data.data.chapter.name,
             ['book.content']: than.data.book.content.concat(content),
             isShow: "display:block"
           })
