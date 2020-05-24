@@ -95,7 +95,7 @@ Page({
         if (res.data.code = 1) {
           console.log('获取书籍成功')
           console.log(res)
-          if (res.data.data.length > 0) {
+          if (res.data.data!=null&&res.data.data.length > 0) {
             than.data.books.splice(0, than.data.books.length)
             than.setData({
               books: than.data.books
@@ -112,23 +112,23 @@ Page({
                   res.data.data[i].id,
               })
             }
-          }
-          if (wx.pageScrollTo) {
-            wx.pageScrollTo({
-              scrollTop: 0
+            if (wx.pageScrollTo) {
+              wx.pageScrollTo({
+                scrollTop: 0
+              })
+            } else {
+              wx.showModal({
+                title: '提示',
+                content: '当前微信版本过低，请升级到最新微信版本后重试。'
+              })
+            }
+          }else {
+            wx.showToast({
+              title: '此分类下暂无小说',
+              icon: 'none',
+              duration: 3000
             })
-          } else {
-            wx.showModal({
-              title: '提示',
-              content: '当前微信版本过低，请升级到最新微信版本后重试。'
-            })
           }
-        } else {
-          wx.showToast({
-            title: '此分类下暂无小说',
-            icon: 'none',
-            duration: 3000
-          })
         }
       },
       fail: function (res) {
