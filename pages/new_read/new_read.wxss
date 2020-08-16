@@ -18,6 +18,8 @@
   padding: 10rpx 30rpx;
   column-count: 1;
   column-gap: 60rpx;
+  -webkit-columns: 1;
+  -webkit-column-gap: 60rpx;
   width: auto;
   height: 100%;
   font-size: 16px;

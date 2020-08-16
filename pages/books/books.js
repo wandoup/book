@@ -101,8 +101,20 @@ Page({
       let jname = JSON.stringify(aname);
       let jnovelid = JSON.stringify(novelId);
       let jchapterid = JSON.stringify(chapterId);
+
+      var jpage = 'new_read';
+      wx.getSystemInfo({
+        success:function(res){
+          if(res.platform == "devtools"){
+          }else if(res.platform == "ios"){
+            jpage = 'read';
+          }else if(res.platform == "android"){
+          }
+        }
+      })
+
       wx.navigateTo({
-        url: '../new_read/new_read?novel_id=' + jnovelid + '&chapter_id=' + jchapterid + '&name=' + jname
+        url: '../'+jpage+'/'+jpage+'?novel_id=' + jnovelid + '&chapter_id=' + jchapterid + '&name=' + jname
       })
     }
   },
