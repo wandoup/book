@@ -10,7 +10,8 @@
     "pages/read/read",
     "pages/catalog/catalog",
     "pages/history/history",
-    "pages/collection/collection"
+    "pages/collection/collection",
+    "pages/new_read/new_read"
   ],
   "window": {
     "backgroundTextStyle": "light",
