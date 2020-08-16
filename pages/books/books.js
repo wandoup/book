@@ -102,7 +102,7 @@ Page({
       let jnovelid = JSON.stringify(novelId);
       let jchapterid = JSON.stringify(chapterId);
       wx.navigateTo({
-        url: '../read/read?novel_id=' + jnovelid + '&chapter_id=' + jchapterid + '&name=' + jname
+        url: '../new_read/new_read?novel_id=' + jnovelid + '&chapter_id=' + jchapterid + '&name=' + jname
       })
     }
   },
