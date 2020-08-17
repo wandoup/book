@@ -4,7 +4,7 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
@@ -20,7 +20,12 @@
 			"ignore": [],
 			"disablePlugins": [],
 			"outputPath": ""
-		}
+		},
+		"useIsolateContext": true,
+		"useCompilerModule": false,
+		"userConfirmedUseCompilerModuleSwitch": false,
+		"packNpmManually": false,
+		"packNpmRelationList": []
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.10.0",
@@ -54,7 +59,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 8,
 			"list": [
 				{
 					"id": -1,
@@ -109,6 +114,13 @@
 					"id": -1,
 					"name": "pages/books/books",
 					"pathName": "pages/books/books",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "new_read",
+					"pathName": "pages/new_read/new_read",
 					"scene": null
 				}
 			]
