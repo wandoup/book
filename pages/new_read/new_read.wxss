@@ -24,20 +24,19 @@
   height: 100%;
   font-size: 16px;
   font-weight: bolder;
-  transition-duration: 0.5s;
 }
 
 .artical-action-mid {
   /* width: 100%; */
-  height: 97%;
+  height: 90%;
   position: absolute;
   left: 0px;
-  top: 20px;
+  top: 100rpx;
   border-radius: 20px;
   overflow: scroll;
 }
 
-.container {
+.txt-container {
   width: 100%;
   height: 100%;
   position: absolute;
@@ -55,6 +54,20 @@
   z-index: 999;
 }
 
+.cname {
+  font-size: 25rpx;
+  margin: 50rpx 20rpx;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.3);
+}
+
+.pages {
+  font-size: 22rpx;
+  position: absolute;
+  left: 20rpx;
+  bottom: 10rpx;
+  color: rgba(0, 0, 0, 0.3);
+}
 
 .top-nav-pannel {
   position: fixed;

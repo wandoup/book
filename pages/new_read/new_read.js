@@ -11,6 +11,7 @@ Page({
   data: {
     content: '',
     initFontSize: '14',
+    cname: '',
     colorArr: [{
       value: '#f7eee5',
       name: '米白',
@@ -47,6 +48,7 @@ Page({
     daynight: false,
     zj: 'none',
     tx: 0,
+    tx_time: '0.5',
     totalPage: 0,
     currentPage: 0
   },
@@ -290,7 +292,9 @@ Page({
         }
       }
     }
-
+    wx.showLoading({
+      title: '',
+    })
     wx.request({
       url: 'https://api.ytool.top/api/content',
       data: {
@@ -301,6 +305,9 @@ Page({
       method: 'GET',
       dataType: 'json',
       success: function (res) {
+        wx.hideLoading({
+          success: (res) => {},
+        })
         if (res.data.code == 1) {
           var content = res.data.data.chapter.content;
           content = content.replace(/<p>/g, '&emsp;&emsp;');
@@ -312,11 +319,19 @@ Page({
           content = content.replace(/”/g, '"');
           content = ' &emsp;&emsp;' + content;
           _this.setData({
+            tx_time: 0,
             content: content,
+            cname: res.data.data.chapter.name,
             currentPage: 1,
             totalPage: 2,
             tx: 0
           })
+          setTimeout(() => {
+            _this.setData({
+              tx_time: 0.5,
+            })
+            _this.countTotalPage();
+          }, 200);
         } else {
           wx.showModal({
             title: '请求错误',
