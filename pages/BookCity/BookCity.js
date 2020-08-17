@@ -18,7 +18,8 @@ Page({
       name:"",
       author:"",
       bookid:"",
-    },]
+    },],
+    jumpbox:false,
 
   },
 
@@ -79,6 +80,70 @@ Page({
     let did = JSON.stringify(id);
     wx.navigateTo({
       url: '../details/details?bookid=' + did,
+    })
+  },
+  butyes: function () {
+    var than = this;
+    num++
+    wx.request({
+      url: 'https://api.ytool.top/api/novellist',
+      data: { cate_id: id, page: num },
+      method: 'GET',
+      dataType: 'json',
+      responseType: 'text',
+      success: function (res) {
+        if (res.data.code = 1) {
+          console.log('获取书籍成功')
+          console.log(res)
+          if (res.data.data.length > 0) {
+            than.data.books.splice(0, than.data.books.length)
+            than.setData({
+              books: than.data.books
+            })
+            for (var i = 0; i < res.data.data.length; i++) {
+              than.setData({
+                ['books[' + i + '].src']:
+                  res.data.data[i].cover.replace(/http:/g, 'https:'),
+                ['books[' + i + '].name']:
+                  res.data.data[i].name,
+                ['books[' + i + '].author']:
+                  res.data.data[i].author.name,
+                ['books[' + i + '].bookid']:
+                  res.data.data[i].id,
+              })
+            }
+          }
+          if (wx.pageScrollTo) {
+            wx.pageScrollTo({
+              scrollTop: 0
+            })
+          } else {
+            wx.showModal({
+              title: '提示',
+              content: '当前微信版本过低，请升级到最新微信版本后重试。'
+            })
+          }
+        } else {
+          wx.showToast({
+            title: '此分类下暂无小说',
+            icon: 'none',
+            duration: 3000
+          })
+        }
+      },
+      fail: function (res) {
+        console.log('失败')
+      },
+      complete: function (res) {
+        than.setData({
+          jumpbox: false
+        })
+      },
+    })
+  },
+  butno: function () {
+    this.setData({
+      jumpbox: false
     })
   },
 
@@ -157,58 +222,8 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    var than = this;
-    num++
-    wx.request({
-      url: 'https://api.ytool.top/api/novellist',
-      data: { cate_id: id,page:num },
-      method: 'GET',
-      dataType: 'json',
-      responseType: 'text',
-      success: function (res) {
-        if(res.data.code=1){
-          console.log('获取书籍成功')
-          console.log(res)
-          if (res.data.data.length > 0) {
-            than.data.books.splice(0, than.data.books.length)
-            than.setData({
-              books: than.data.books
-            })
-            for (var i = 0; i < res.data.data.length; i++) {
-              than.setData({
-                ['books[' + i + '].src']:
-                  res.data.data[i].cover.replace(/http:/g, 'https:'),
-                ['books[' + i + '].name']:
-                  res.data.data[i].name,
-                ['books[' + i + '].author']:
-                  res.data.data[i].author.name,
-                ['books[' + i + '].bookid']:
-                  res.data.data[i].id,
-              })
-            }
-          }
-          if (wx.pageScrollTo) {
-            wx.pageScrollTo({
-              scrollTop: 0
-            })
-          } else {
-            wx.showModal({
-              title: '提示',
-              content: '当前微信版本过低，请升级到最新微信版本后重试。'
-            })
-          }
-        }else{
-          wx.showToast({
-            title: '此分类下暂无小说',
-            icon: 'none',
-            duration: 3000
-          })
-        }
-      },
-      fail: function (res) {
-        console.log('失败')
-      },
-      complete: function (res) { },
+    this.setData({
+      jumpbox: true
     })
   },
 
