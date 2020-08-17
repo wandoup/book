@@ -28,13 +28,6 @@
     </block>
   </view>
 </view>
-<!-- 上一页下一页 -->
-<view class="m-button-bar" style="display:{{zj}}">
-  <view class="u-tab">
-    <view class="uli" bindtap="lastPage">上一页</view>
-    <view class="uli" style="border-right:none" bindtap="nextPage">下一页</view>
-  </view>
-</view>
 <!-- 底部 -->
 <view class="bottom-nav bottom_nav" style="display:{{nav}}">
   <view class="item menu-button">

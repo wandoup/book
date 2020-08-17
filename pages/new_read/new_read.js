@@ -212,11 +212,6 @@ Page({
   },
   //上一页
   lastPage: function () {
-    this.setData({
-      nav: 'none',
-      ziti: 'none',
-      zj: 'none'
-    })
     if (this.data.tx >= 0) {
       chapterId--;
       if (chapterId <= 0) {
@@ -229,7 +224,8 @@ Page({
       this.getContent(novelId, chapterId);
     } else {
       this.setData({
-        tx: this.data.tx + 750
+        tx: this.data.tx + 750,
+        currentPage: this.data.currentPage - 1
       })
     }
 
@@ -266,16 +262,13 @@ Page({
   },
   // 触摸结束事件 
   touchEnd: function (e) {
-    if (touchMove !== 0) {
-      // 向左滑动 
-      if (touchMove - touchDot <= -40 && time < 10) {
-
-        this.nextPage();
-      }
-      // 向右滑动 
-      if (touchMove - touchDot >= 40 && time < 10) {
-        this.lastPage();
-      }
+    // 向左滑动 
+    if (touchMove - touchDot <= -40 && time < 10) {
+      this.nextPage();
+    }
+    // 向右滑动 
+    if (touchMove - touchDot >= 40 && time < 10) {
+      this.lastPage();
     }
     clearInterval(interval); // 清除setInterval 
     time = 0;
@@ -322,16 +315,17 @@ Page({
             tx_time: 0,
             content: content,
             cname: res.data.data.chapter.name,
-            currentPage: 1,
-            totalPage: 2,
+            currentPage: 0,
+            totalPage: 0,
             tx: 0
           })
           setTimeout(() => {
             _this.setData({
+              currentPage: 1,
               tx_time: 0.5,
             })
             _this.countTotalPage();
-          }, 200);
+          }, 100);
         } else {
           wx.showModal({
             title: '请求错误',
