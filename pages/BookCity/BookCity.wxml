@@ -18,3 +18,14 @@
         </view>
     </view>
 </view>
+<view class="box" wx:if="{{jumpbox}}">
+  <view class="jump-box">
+      <view class="jump">
+        <text>是否跳转下一页</text>
+      </view>
+      <view class="but-box">
+        <view class="yes" bindtap="butyes">是</view>
+        <view class="no" bindtap="butno">否</view>
+      </view>
+  </view>
+</view>
