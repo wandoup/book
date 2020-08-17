@@ -111,7 +111,6 @@ Page({
     that.setData({
       initFontSize: FontSize += 1
     })
-    // console.log(that.data.initFontSize)
     wx.setStorage({
       key: "initFontSize",
       data: that.data.initFontSize
@@ -127,7 +126,6 @@ Page({
     that.setData({
       initFontSize: FontSize -= 1
     })
-    // console.log(that.data.initFontSize)
     wx.setStorage({
       key: "initFontSize",
       data: that.data.initFontSize
@@ -250,6 +248,7 @@ Page({
     interval = setInterval(function () {
       time++;
     }, 100);
+    touchMove = 0;
   },
   // 触摸移动事件 
   touchMove: function (e) {
@@ -263,11 +262,11 @@ Page({
   // 触摸结束事件 
   touchEnd: function (e) {
     // 向左滑动 
-    if (touchMove - touchDot <= -40 && time < 10) {
+    if ((touchMove - touchDot <= -40 && time < 10) || (touchMove == 0 && touchDot > clientW/2)) {
       this.nextPage();
     }
     // 向右滑动 
-    if (touchMove - touchDot >= 40 && time < 10) {
+    if ((touchMove - touchDot >= 40 && time < 10) || (touchMove == 0 && touchDot < clientW/2)) {
       this.lastPage();
     }
     clearInterval(interval); // 清除setInterval 
@@ -286,7 +285,7 @@ Page({
       }
     }
     wx.showLoading({
-      title: '',
+      title: '加载中',
     })
     wx.request({
       url: 'https://api.ytool.top/api/content',
