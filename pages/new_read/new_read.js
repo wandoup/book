@@ -261,12 +261,17 @@ Page({
   },
   // 触摸结束事件 
   touchEnd: function (e) {
+    console.log(touchDot);
+    console.log(touchMove);
+    console.log(clientW/2);
     // 向左滑动 
-    if ((touchMove - touchDot <= -40 && time < 10) || (touchMove == 0 && touchDot > clientW/2)) {
+    if ((touchMove != 0 && touchMove - touchDot <= -40 && time < 10) || (touchMove == 0 && touchDot > clientW/2)) {
+      console.log('next');
       this.nextPage();
     }
     // 向右滑动 
     if ((touchMove - touchDot >= 40 && time < 10) || (touchMove == 0 && touchDot < clientW/2)) {
+      console.log('last');
       this.lastPage();
     }
     clearInterval(interval); // 清除setInterval 
