@@ -7,20 +7,20 @@ Page({
   data: {
     history: [
       {
-        name: '万古最强宗',
-        author: '江湖再见',
+        name: '福州旅游指南',
+        author: '福州',
       }, {
-        name: '修真聊天群',
-        author: '圣骑士传说',
+        name: '厦门旅游指南',
+        author: '厦门',
       }, {
-        name: '万古神帝',
-        author: '飞天鱼',
+        name: '泉州旅游指南',
+        author: '泉州',
       }, {
-        name: '谍影风云',
-        author: '寻青藤',
+        name: '三明福州旅游指南',
+        author: '三明',
       }, {
-        name: '明天下',
-        author: '子与',
+        name: '龙岩福州旅游指南',
+        author: '龙岩',
       },
     ]
   },

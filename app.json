@@ -26,12 +26,12 @@
     "list": [
       {
         "pagePath": "pages/books/books",
-        "text": "书架",
+        "text": "书签",
         "iconPath": "./images/books.png",
         "selectedIconPath": "./images/bookscl.png"
       },{
         "pagePath": "pages/BookCity/BookCity",
-        "text": "书城",
+        "text": "分类",
         "iconPath": "./images/city.png",
         "selectedIconPath": "./images/citycl.png"
       },
