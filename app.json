@@ -11,7 +11,8 @@
     "pages/catalog/catalog",
     "pages/history/history",
     "pages/collection/collection",
-    "pages/new_read/new_read"
+    "pages/new_read/new_read",
+    "pages/read_c/read_c"
   ],
   "window": {
     "backgroundTextStyle": "light",

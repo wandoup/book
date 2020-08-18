@@ -112,7 +112,10 @@ Page({
           }
         }
       })
-
+      var isChk = wx.getStorageSync('chk');
+      if (isChk == 1) {      
+        jpage = 'read_c';
+      }
       wx.navigateTo({
         url: '../'+jpage+'/'+jpage+'?novel_id=' + jnovelid + '&chapter_id=' + jchapterid + '&name=' + jname
       })
