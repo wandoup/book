@@ -11,6 +11,7 @@ Page({
   data: {
     content: '',
     initFontSize: '14',
+    cname: '',
     colorArr: [{
       value: '#f7eee5',
       name: '米白',
@@ -47,6 +48,7 @@ Page({
     daynight: false,
     zj: 'none',
     tx: 0,
+    tx_time: '0.5',
     totalPage: 0,
     currentPage: 0
   },
@@ -109,7 +111,6 @@ Page({
     that.setData({
       initFontSize: FontSize += 1
     })
-    // console.log(that.data.initFontSize)
     wx.setStorage({
       key: "initFontSize",
       data: that.data.initFontSize
@@ -125,7 +126,6 @@ Page({
     that.setData({
       initFontSize: FontSize -= 1
     })
-    // console.log(that.data.initFontSize)
     wx.setStorage({
       key: "initFontSize",
       data: that.data.initFontSize
@@ -210,11 +210,6 @@ Page({
   },
   //上一页
   lastPage: function () {
-    this.setData({
-      nav: 'none',
-      ziti: 'none',
-      zj: 'none'
-    })
     if (this.data.tx >= 0) {
       chapterId--;
       if (chapterId <= 0) {
@@ -227,7 +222,8 @@ Page({
       this.getContent(novelId, chapterId);
     } else {
       this.setData({
-        tx: this.data.tx + 750
+        tx: this.data.tx + 750,
+        currentPage: this.data.currentPage - 1
       })
     }
 
@@ -252,6 +248,7 @@ Page({
     interval = setInterval(function () {
       time++;
     }, 100);
+    touchMove = 0;
   },
   // 触摸移动事件 
   touchMove: function (e) {
@@ -264,16 +261,13 @@ Page({
   },
   // 触摸结束事件 
   touchEnd: function (e) {
-    if (touchMove !== 0) {
-      // 向左滑动 
-      if (touchMove - touchDot <= -40 && time < 10) {
-
-        this.nextPage();
-      }
-      // 向右滑动 
-      if (touchMove - touchDot >= 40 && time < 10) {
-        this.lastPage();
-      }
+    // 向左滑动 
+    if ((touchMove - touchDot <= -40 && time < 10) || (touchMove == 0 && touchDot > clientW/2)) {
+      this.nextPage();
+    }
+    // 向右滑动 
+    if ((touchMove - touchDot >= 40 && time < 10) || (touchMove == 0 && touchDot < clientW/2)) {
+      this.lastPage();
     }
     clearInterval(interval); // 清除setInterval 
     time = 0;
@@ -290,7 +284,9 @@ Page({
         }
       }
     }
-
+    wx.showLoading({
+      title: '加载中',
+    })
     wx.request({
       url: 'https://api.ytool.top/api/content',
       data: {
@@ -301,6 +297,9 @@ Page({
       method: 'GET',
       dataType: 'json',
       success: function (res) {
+        wx.hideLoading({
+          success: (res) => {},
+        })
         if (res.data.code == 1) {
           var content = res.data.data.chapter.content;
           content = content.replace(/<p>/g, '&emsp;&emsp;');
@@ -312,11 +311,20 @@ Page({
           content = content.replace(/”/g, '"');
           content = ' &emsp;&emsp;' + content;
           _this.setData({
+            tx_time: 0,
             content: content,
-            currentPage: 1,
-            totalPage: 2,
+            cname: res.data.data.chapter.name,
+            currentPage: 0,
+            totalPage: 0,
             tx: 0
           })
+          setTimeout(() => {
+            _this.setData({
+              currentPage: 1,
+              tx_time: 0.5,
+            })
+            _this.countTotalPage();
+          }, 100);
         } else {
           wx.showModal({
             title: '请求错误',

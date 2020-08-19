@@ -1,13 +1,17 @@
 <!-- 文本 -->
-<view class="container" style="background:{{bodyColor}}">
+<view class="txt-container" style="background:{{bodyColor}}">
+  <view class="cname">{{cname}}</view>
   <!-- 中间层，点击，头部底部显示 -->
   <view class="mid-area" bindtap="midaction"></view>
   <!-- 主体内容 -->
-  <scroll-view scroll-y='true' class="artical-action-mid" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
-    <view class="m-read-content" style="font-size:{{initFontSize}}px;transform: translateX({{tx}}rpx);">
+  <scroll-view scroll-y='true' class="artical-action-mid" bindtouchstart="touchStart" bindtouchmove="touchMove"
+    bindtouchend="touchEnd">
+    <view class="m-read-content"
+      style="font-size:{{initFontSize}}px;transform: translateX({{tx}}rpx);transition-duration: {{tx_time}}s;">
       <text class="content-text" decode="true">{{content}}</text>
     </view>
   </scroll-view>
+  <view class="pages">{{currentPage}}/{{totalPage}}</view>
 </view>
 <!-- 字体调节 -->
 <view class="top-nav-pannel font-container" style="display:{{ziti}}">
@@ -22,13 +26,6 @@
       <view class="bk-container {{_num==index?'bk-container-current':''}}" data-num="{{index}}"
         style="background-color:{{color.value}}" bindtap="bgChange"></view>
     </block>
-  </view>
-</view>
-<!-- 上一页下一页 -->
-<view class="m-button-bar" style="display:{{zj}}">
-  <view class="u-tab">
-    <view class="uli" bindtap="lastPage">上一页</view>
-    <view class="uli" style="border-right:none" bindtap="nextPage">下一页</view>
   </view>
 </view>
 <!-- 底部 -->
