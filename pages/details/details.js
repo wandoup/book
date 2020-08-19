@@ -22,8 +22,13 @@ Page({
     let jname = JSON.stringify(aname);
     let jnovelid = JSON.stringify(novelId);
     let jchapterid = JSON.stringify(chapterId);
+    var isChk = wx.getStorageSync('chk');
+    var jpage = 'read';
+    if (isChk == 1) {      
+      jpage = 'read_c';
+    }
     wx.navigateTo({
-      url: '../read/read?novel_id=' + jnovelid + '&chapter_id=' + jchapterid + '&name=' + jname
+      url: '../'+jpage+'/'+jpage+'?novel_id=' + jnovelid + '&chapter_id=' + jchapterid + '&name=' + jname
     })
   },
   

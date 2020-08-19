@@ -7,23 +7,20 @@ Page({
   data: {
     collection:[
       {
-        name:'轮回乐园',
-        author:'那一只蚊子',
+        name: '福州旅游指南',
+        author: '福州',
       }, {
-        name: '万古最强宗',
-        author: '江湖再见',
+        name: '厦门旅游指南',
+        author: '厦门',
       }, {
-        name: '修真聊天群',
-        author: '圣骑士传说',
+        name: '泉州旅游指南',
+        author: '泉州',
       }, {
-        name: '万古神帝',
-        author: '飞天鱼',
+        name: '三明旅游指南',
+        author: '三明',
       }, {
-        name: '谍影风云',
-        author: '寻青藤',
-      }, {
-        name: '明天下',
-        author: '子与',
+        name: '漳州旅游指南',
+        author: '漳州',
       },
     ]
   },

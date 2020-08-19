@@ -47,6 +47,12 @@ Page({
                             key: 'token',
                             data: res.data.data.token,
                           })
+                          if(res.data.data.chk){
+                            wx.setStorage({
+                              key: 'chk',
+                              data: 1,
+                            })
+                          }
                           console.log('登录成功')
                           wx.showToast({
                             title: '登录成功',

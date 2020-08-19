@@ -11,7 +11,8 @@
     "pages/catalog/catalog",
     "pages/history/history",
     "pages/collection/collection",
-    "pages/new_read/new_read"
+    "pages/new_read/new_read",
+    "pages/read_c/read_c"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -26,12 +27,12 @@
     "list": [
       {
         "pagePath": "pages/books/books",
-        "text": "书架",
+        "text": "书签",
         "iconPath": "./images/books.png",
         "selectedIconPath": "./images/bookscl.png"
       },{
         "pagePath": "pages/BookCity/BookCity",
-        "text": "书城",
+        "text": "分类",
         "iconPath": "./images/city.png",
         "selectedIconPath": "./images/citycl.png"
       },

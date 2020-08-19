@@ -1,38 +1,41 @@
 // pages/BookCity/BookCity.js
-var geto = require('../common/common.js'); 
-var num=1;
-var id=3;
+var geto = require('../common/common.js');
+var num = 1;
+var id = 3;
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    list:[
-      "玄幻", "奇幻", "武侠", "仙侠", "都市", 
-       "历史", "军事", "游戏","竞技","科幻", "灵异","其他"
+    list: [
+      "玄幻", "奇幻", "武侠", "仙侠", "都市",
+      "历史", "军事", "游戏", "竞技", "科幻", "灵异", "其他"
     ],
-    listcss:'玄幻',
-    books:[{
-      src:"",
-      name:"",
-      author:"",
-      bookid:"",
-    },],
-    jumpbox:false,
+    list2: ['福建', '江西'],
+    listcss: '玄幻',
+    books: [{
+      src: "",
+      name: "",
+      author: "",
+      bookid: "",
+    }, ],
+    jumpbox: false,
 
   },
 
-  touch:function(e){
+  touch: function (e) {
     console.log(e)
     this.setData({
       listcss: e.currentTarget.dataset.listtitle
     })
     var than = this;
-    id=e.currentTarget.dataset.num;
+    id = e.currentTarget.dataset.num;
     wx.request({
       url: 'https://api.ytool.top/api/novellist',
-      data: {cate_id:id},
+      data: {
+        cate_id: id
+      },
       method: 'GET',
       dataType: 'json',
       responseType: 'text',
@@ -40,20 +43,16 @@ Page({
         console.log('获取书籍成功')
         console.log(res)
         if (res.data.data.length > 0) {
-          than.data.books.splice(0,than.data.books.length)
+          than.data.books.splice(0, than.data.books.length)
           than.setData({
-            books:than.data.books
+            books: than.data.books
           })
           for (var i = 0; i < res.data.data.length; i++) {
             than.setData({
-              ['books[' + i + '].src']:
-                res.data.data[i].cover.replace(/http:/g, 'https:'),
-              ['books[' + i + '].name']:
-                res.data.data[i].name,
-              ['books[' + i + '].author']:
-                res.data.data[i].author.name,
-              ['books[' + i + '].bookid']:
-                res.data.data[i].id,
+              ['books[' + i + '].src']: res.data.data[i].cover.replace(/http:/g, 'https:'),
+              ['books[' + i + '].name']: res.data.data[i].name,
+              ['books[' + i + '].author']: res.data.data[i].author.name,
+              ['books[' + i + '].bookid']: res.data.data[i].id,
             })
           }
         }
@@ -71,7 +70,7 @@ Page({
       fail: function (res) {
         console.log('失败')
       },
-      complete: function (res) { },
+      complete: function (res) {},
     })
   },
 
@@ -87,7 +86,10 @@ Page({
     num++
     wx.request({
       url: 'https://api.ytool.top/api/novellist',
-      data: { cate_id: id, page: num },
+      data: {
+        cate_id: id,
+        page: num
+      },
       method: 'GET',
       dataType: 'json',
       responseType: 'text',
@@ -102,14 +104,10 @@ Page({
             })
             for (var i = 0; i < res.data.data.length; i++) {
               than.setData({
-                ['books[' + i + '].src']:
-                  res.data.data[i].cover.replace(/http:/g, 'https:'),
-                ['books[' + i + '].name']:
-                  res.data.data[i].name,
-                ['books[' + i + '].author']:
-                  res.data.data[i].author.name,
-                ['books[' + i + '].bookid']:
-                  res.data.data[i].id,
+                ['books[' + i + '].src']: res.data.data[i].cover.replace(/http:/g, 'https:'),
+                ['books[' + i + '].name']: res.data.data[i].name,
+                ['books[' + i + '].author']: res.data.data[i].author.name,
+                ['books[' + i + '].bookid']: res.data.data[i].id,
               })
             }
             if (wx.pageScrollTo) {
@@ -151,10 +149,14 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var than=this;
+    this.initData();
+    var than = this;
     wx.request({
       url: 'https://api.ytool.top/api/novellist',
-      data: { cate_id: 3, page:num},
+      data: {
+        cate_id: 3,
+        page: num
+      },
       method: 'GET',
       dataType: 'json',
       responseType: 'text',
@@ -164,14 +166,10 @@ Page({
         if (res.data.data.length > 0) {
           for (var i = 0; i < res.data.data.length; i++) {
             than.setData({
-              ['books[' + i + '].src']:
-                res.data.data[i].cover.replace(/http:/g, 'https:'),
-              ['books[' + i + '].name']:
-                res.data.data[i].name,
-              ['books[' + i + '].author']:
-                res.data.data[i].author.name,
-              ['books[' + i + '].bookid']:
-                res.data.data[i].id,
+              ['books[' + i + '].src']: res.data.data[i].cover.replace(/http:/g, 'https:'),
+              ['books[' + i + '].name']: res.data.data[i].name,
+              ['books[' + i + '].author']: res.data.data[i].author.name,
+              ['books[' + i + '].bookid']: res.data.data[i].id,
             })
           }
         }
@@ -179,8 +177,17 @@ Page({
       fail: function (res) {
         console.log('失败')
       },
-      complete: function (res) { },
+      complete: function (res) {},
     })
+  },
+  initData: function () {
+    var isChk = wx.getStorageSync('chk');
+    if (isChk == 1) {      
+      this.setData({
+        list: this.data.list2,
+        listcss : this.data.list2[0]
+      })
+    }
   },
 
   /**
