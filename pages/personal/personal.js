@@ -52,6 +52,11 @@ Page({
                               key: 'chk',
                               data: 1,
                             })
+                          }else{
+                            wx.setStorage({
+                              key: 'chk',
+                              data: 0,
+                            })
                           }
                           console.log('登录成功')
                           wx.showToast({

@@ -1,9 +1,11 @@
-var touchDot = 0; //触摸时的原点 
+var touchDotx = 0; //触摸时的原点
+var touchDoty = 0;
 var touchMove = 0;
 var time = 0; // 时间记录，用于滑动时且时间小于1s则执行左右滑动 
 var interval = ""; // 记录/清理时间记录 
 var scrollW = '';
 var clientW = '';
+var clientY = '';
 var novelId = 0;
 var chapterId = 0;
 var page = 1;
@@ -76,6 +78,7 @@ Page({
     wx.getSystemInfo({
       success: function (res) {
         clientW = res.screenWidth;
+        clientY = res.screenHeight;
       }
     });
 
@@ -227,8 +230,9 @@ Page({
   },
   // 触摸开始事件 
   touchStart: function (e) {
-    touchDot = e.touches[0].pageX; // 获取触摸时的原点 
-    // 使用js计时器记录时间  
+    touchDotx = e.touches[0].pageX; // 获取触摸时的原点
+    touchDoty = e.touches[0].pageY; // 获取触摸时的原点
+    // 使用js计时器记录时间
     interval = setInterval(function () {
       time++;
     }, 100);
@@ -245,15 +249,28 @@ Page({
   },
   // 触摸结束事件 
   touchEnd: function (e) {
-    // 向左滑动
-    if ((touchMove != 0 && touchMove - touchDot <= -40 && time < 10) || (touchMove == 0 && touchDot > clientW / 2)) {
-      this.nextPage();
+    if (touchMove === 0) { //纯点击事件
+      //点击中心区域
+      if (touchDotx > clientW / 3 && touchDotx < clientW / 3 * 2 && touchDoty > clientY / 3 && touchDoty < clientY / 3 * 2) {
+        this.midaction();
+      }
+      if (touchDotx > clientW / 3 * 2) {
+        this.nextPage();
+      }
+      if (touchDotx < clientW / 3) {
+        this.nextPage();
+      }
+    } else {
+      // 向左滑动
+      if (touchMove - touchDotx <= -40 && time < 10) {
+        this.nextPage();
+      }
+      // 向右滑动
+      if (touchMove - touchDotx >= 40 && time < 10) {
+        this.lastPage();
+      }
     }
-    // 向右滑动 
-    if ((touchMove - touchDot >= 40 && time < 10) || (touchMove == 0 && touchDot < clientW / 2)) {
-      this.lastPage();
-    }
-    clearInterval(interval); // 清除setInterval 
+    clearInterval(interval); // 清除setInterval
     time = 0;
   },
   getContent: function (nid, cid, preLoad = false) {
@@ -429,12 +446,25 @@ Page({
     wx.createSelectorQuery().select('.artical-action-mid').scrollOffset(function (rect) {
       scrollW = rect.scrollWidth; //获取滚动条宽度
       var pages = Math.round(scrollW / clientW);
-      if(init !== true){
-        pages --;
+      if (init !== true) {
+        pages--;
       }
       _this.setData({
         totalPage: pages + _this.data.currentPage - 1,
       })
     }).exec()
+  },
+  goBack: function () {
+    wx.navigateBack({
+      delta: 1
+    })
+  },
+  lastChap:function () {
+    chapterId--;
+    this.getContent(novelId, chapterId);
+  },
+  nextChap:function () {
+    chapterId++;
+    this.getContent(novelId, chapterId);
   }
 })

@@ -1,8 +1,6 @@
 <!-- 文本 -->
 <view class="txt-container" style="background:{{bodyColor}}">
   <view class="cname">{{cname}}</view>
-  <!-- 中间层，点击，头部底部显示 -->
-  <view class="mid-area" bindtap="midaction"></view>
   <!-- 主体内容 -->
   <scroll-view scroll-y='true' class="artical-action-mid" bindtouchstart="touchStart" bindtouchmove="touchMove"
     bindtouchend="touchEnd">
@@ -48,6 +46,11 @@
 
 <!-- 底部 -->
 <view class="bottom-nav" style="display:{{nav}}">
+  <view class="icon-back" bindtap="goBack">
+  <view class="arrow"></view>
+  </view>
+    <view class="up" bindtap="lastChap">上一章</view>
+    <view class="down" bindtap="nextChap">下一章</view>
   <view class="item" bindtap="showChapList">
     <view class="item-warp">
       <view class="icon-menu"></view>
