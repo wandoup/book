@@ -28,9 +28,27 @@
     </block>
   </view>
 </view>
+<view class="mask" style="display: {{mask_show}}" bindtap="hideMask"></view>
+<view class="chapters" style="transform: translateX({{tx_menu}}%);">
+  <view class="title">目录</view>
+    <view class="chap-info">
+      <view>共{{totalChap}}章</view>
+      <view bindtap="orderDesc" wx:if="{{orderBy == 'asc'}}">倒序</view>
+      <view bindtap="orderDesc" wx:if="{{orderBy == 'desc'}}">正序</view>
+    </view>
+    <scroll-view scroll-y class="list-con" bindscrolltolower="moreChap" scroll-top="{{scroll_top}}">
+      <view class="tips">正文卷</view>
+      <view wx:for="{{chap_list}}" wx:key="index"
+            bindtap="selectChap"
+            data-cid="{{item.cid}}">
+        <text>{{item.name}}</text>
+      </view>
+    </scroll-view>
+</view>
+
 <!-- 底部 -->
-<view class="bottom-nav bottom_nav" style="display:{{nav}}">
-  <view class="item menu-button">
+<view class="bottom-nav" style="display:{{nav}}">
+  <view class="item" bindtap="showChapList">
     <view class="item-warp">
       <view class="icon-menu"></view>
       <view class="icon-text">目录</view>
