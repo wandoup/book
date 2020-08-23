@@ -1,5 +1,4 @@
 /* css */
-
 .m-read-content {
   font-size: 14px;
   color: #555;
@@ -16,9 +15,9 @@
 .m-read-content {
   padding: 10rpx 30rpx;
   column-count: 1;
-  column-gap: 60rpx;
+  column-gap: 58rpx;
   -webkit-columns: 1;
-  -webkit-column-gap: 60rpx;
+  -webkit-column-gap: 58rpx;
   width: auto;
   height: 100%;
   font-size: 16px;

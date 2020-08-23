@@ -206,7 +206,7 @@ Page({
       this.getContent(novelId, chapterId);
     } else {
       this.setData({
-        tx: this.data.tx + 750,
+        tx: this.data.tx + 100,
         currentPage: this.data.currentPage - 1
       })
     }
@@ -214,13 +214,13 @@ Page({
   },
   //下一页
   nextPage: function () {
-    this.countTotalPage();
     if (this.data.currentPage >= this.data.totalPage) {
       chapterId++;
       this.getContent(novelId, chapterId);
     } else {
+      this.countTotalPage();
       this.setData({
-        tx: this.data.tx - 750,
+        tx: this.data.tx - 100,
         currentPage: this.data.currentPage + 1
       })
     }
@@ -308,7 +308,7 @@ Page({
               currentPage: 1,
               tx_time: 0.5,
             })
-            _this.countTotalPage();
+            _this.countTotalPage(true);
           }, 100);
         } else {
           wx.showModal({
@@ -423,13 +423,15 @@ Page({
     page++;
     this.getChapList(page, this.data.orderBy);
   },
-  //获取总页码，有瑕疵-总宽度异常
-  countTotalPage: function () {
+  //获取总页码，有瑕疵--点太快，transition,没执行完，剩余宽度变多
+  countTotalPage: function (init = false) {
     var _this = this;
     wx.createSelectorQuery().select('.artical-action-mid').scrollOffset(function (rect) {
-      console.log(rect)
       scrollW = rect.scrollWidth; //获取滚动条宽度
-      var pages = Math.floor(scrollW / clientW);
+      var pages = Math.round(scrollW / clientW);
+      if(init !== true){
+        pages --;
+      }
       _this.setData({
         totalPage: pages + _this.data.currentPage - 1,
       })
