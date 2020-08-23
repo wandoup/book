@@ -45,9 +45,18 @@ Page({
       title: '加载中',
       mask: true
     });
+    var token = wx.getStorageSync('token');
+    var header = {};
+    if (token) {
+      header = {
+        'content-type': 'application/json',
+        'token': token
+      }
+    }
     wx.request({
       url: 'https://api.ytool.top/api/chapter',
       data: { novel_id: id },
+      header: header,
       method: 'GET',
       dataType: 'json',
       responseType: 'text',

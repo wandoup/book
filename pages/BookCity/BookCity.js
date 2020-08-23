@@ -29,6 +29,14 @@ Page({
     this.setData({
       listcss: e.currentTarget.dataset.listtitle
     })
+    var token = wx.getStorageSync('token');
+    var header = {};
+    if (token) {
+      header = {
+        'content-type': 'application/json',
+        'token': token
+      }
+    }
     var than = this;
     id = e.currentTarget.dataset.num;
     wx.request({
@@ -36,6 +44,7 @@ Page({
       data: {
         cate_id: id
       },
+      header: header,
       method: 'GET',
       dataType: 'json',
       responseType: 'text',
@@ -84,6 +93,14 @@ Page({
   butyes: function () {
     var than = this;
     num++
+    var token = wx.getStorageSync('token');
+    var header = {};
+    if (token) {
+      header = {
+        'content-type': 'application/json',
+        'token': token
+      }
+    }
     wx.request({
       url: 'https://api.ytool.top/api/novellist',
       data: {
@@ -91,6 +108,7 @@ Page({
         page: num
       },
       method: 'GET',
+      header: header,
       dataType: 'json',
       responseType: 'text',
       success: function (res) {
@@ -151,12 +169,21 @@ Page({
   onLoad: function (options) {
     this.initData();
     var than = this;
+    var token = wx.getStorageSync('token');
+    var header = {};
+    if (token) {
+      header = {
+        'content-type': 'application/json',
+        'token': token
+      }
+    }
     wx.request({
       url: 'https://api.ytool.top/api/novellist',
       data: {
         cate_id: 3,
         page: num
       },
+      header: header,
       method: 'GET',
       dataType: 'json',
       responseType: 'text',
