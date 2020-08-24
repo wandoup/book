@@ -40,6 +40,7 @@ Page({
     scroll_top: 0
   },
   onLoad: function (options) {
+    page = 1;
     // 本地提取字号大小
     var that = this;
     wx.getStorage({
@@ -258,7 +259,7 @@ Page({
         this.nextPage();
       }
       if (touchDotx < clientW / 3) {
-        this.nextPage();
+        this.lastPage();
       }
     } else {
       // 向左滑动
