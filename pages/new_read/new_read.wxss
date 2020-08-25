@@ -17,11 +17,11 @@ view,scroll-view,text,block{
 }
 
 .m-read-content {
-  padding: 10rpx 30rpx;
+  padding: 10rpx 20rpx;
   column-count: 1;
-  column-gap: 60rpx;
+  column-gap: 40rpx;
   -webkit-column-count: 1;
-  -webkit-column-gap: 60rpx;
+  -webkit-column-gap: 40rpx;
   width: auto;
   height: 100%;
   font-size: 16px;

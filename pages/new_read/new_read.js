@@ -97,7 +97,7 @@ Page({
     }
     var FontSize = parseInt(that.data.initFontSize)
     that.setData({
-      initFontSize: FontSize += 1
+      initFontSize: FontSize += 2
     })
     wx.setStorage({
       key: "initFontSize",
@@ -223,6 +223,7 @@ Page({
       this.getContent(novelId, chapterId);
     } else {
       this.countTotalPage();
+      console.log(this.data.tx)
       this.setData({
         tx: this.data.tx - 100,
         currentPage: this.data.currentPage + 1

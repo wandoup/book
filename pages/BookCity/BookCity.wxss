@@ -23,6 +23,7 @@
   line-height: 60rpx;
   text-align:center;
   background: #fff;
+  color: red;
 }
 .right{
   float:right;
