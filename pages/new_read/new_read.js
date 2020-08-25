@@ -1,46 +1,27 @@
-var touchDot = 0; //触摸时的原点 
+var touchDotx = 0; //触摸时的原点
+var touchDoty = 0;
 var touchMove = 0;
 var time = 0; // 时间记录，用于滑动时且时间小于1s则执行左右滑动 
 var interval = ""; // 记录/清理时间记录 
 var scrollW = '';
 var clientW = '';
+var clientY = '';
 var novelId = 0;
 var chapterId = 0;
-var aname = '';
+var page = 1;
+
 Page({
   data: {
     content: '',
-    initFontSize: '14',
+    initFontSize: '20',
     cname: '',
-    colorArr: [{
-      value: '#f7eee5',
-      name: '米白',
-      font: ''
-    }, {
-      value: '#e9dfc7',
-      name: '纸张',
-      font: '',
-      id: "font_normal"
-    }, {
-      value: '#a4a4a4',
-      name: '浅灰',
-      font: ''
-    }, {
-      value: '#cdefce',
-      name: '护眼',
-      font: ''
-    }, {
-      value: '#283548',
-      name: '灰蓝',
-      font: '#7685a2',
-      bottomcolor: '#fff'
-    }, {
-      value: '#0f1410',
-      name: '夜间',
-      font: '#4e534f',
-      bottomcolor: 'rgba(255,255,255,0.7)',
-      id: "font_night"
-    }],
+    colorArr: [{value: '#f7eee5', name: '米白', font: ''},
+      {value: '#e9dfc7', name: '纸张', font: '', id: "font_normal"},
+      {value: '#a4a4a4', name: '浅灰', font: ''},
+      {value: '#cdefce', name: '护眼', font: ''},
+      {value: '#283548', name: '灰蓝', font: '#7685a2', bottomcolor: '#fff'},
+      {value: '#0f1410', name: '夜间', font: '#4e534f', bottomcolor: 'rgba(255,255,255,0.7)', id: "font_night"}
+    ],
     nav: 'none',
     ziti: 'none',
     _num: 1,
@@ -48,11 +29,18 @@ Page({
     daynight: false,
     zj: 'none',
     tx: 0,
+    tx_menu: 100,
+    mask_show: 'none',
     tx_time: '0.5',
     totalPage: 0,
-    currentPage: 0
+    currentPage: 0,
+    chap_list: [],
+    totalChap: 0,
+    orderBy: 'asc',
+    scroll_top: 0
   },
   onLoad: function (options) {
+    page = 1;
     // 本地提取字号大小
     var that = this;
     wx.getStorage({
@@ -91,12 +79,12 @@ Page({
     wx.getSystemInfo({
       success: function (res) {
         clientW = res.screenWidth;
+        clientY = res.screenHeight;
       }
     });
 
     novelId = options.novel_id;
     chapterId = options.chapter_id;
-    aname = options.name;
 
     this.getContent(novelId, chapterId);
   },
@@ -135,7 +123,7 @@ Page({
   midaction: function (e) {
     if (this.data.nav == 'none') {
       this.setData({
-        nav: 'block'
+        nav: 'flex'
       })
     } else {
       this.setData({
@@ -222,7 +210,7 @@ Page({
       this.getContent(novelId, chapterId);
     } else {
       this.setData({
-        tx: this.data.tx + 750,
+        tx: this.data.tx + 100,
         currentPage: this.data.currentPage - 1
       })
     }
@@ -230,21 +218,22 @@ Page({
   },
   //下一页
   nextPage: function () {
-    this.countTotalPage();
     if (this.data.currentPage >= this.data.totalPage) {
       chapterId++;
       this.getContent(novelId, chapterId);
     } else {
+      this.countTotalPage();
       this.setData({
-        tx: this.data.tx - 750,
+        tx: this.data.tx - 100,
         currentPage: this.data.currentPage + 1
       })
     }
   },
   // 触摸开始事件 
   touchStart: function (e) {
-    touchDot = e.touches[0].pageX; // 获取触摸时的原点 
-    // 使用js计时器记录时间  
+    touchDotx = e.touches[0].pageX; // 获取触摸时的原点
+    touchDoty = e.touches[0].pageY; // 获取触摸时的原点
+    // 使用js计时器记录时间
     interval = setInterval(function () {
       time++;
     }, 100);
@@ -261,20 +250,28 @@ Page({
   },
   // 触摸结束事件 
   touchEnd: function (e) {
-    console.log(touchDot);
-    console.log(touchMove);
-    console.log(clientW/2);
-    // 向左滑动 
-    if ((touchMove != 0 && touchMove - touchDot <= -40 && time < 10) || (touchMove == 0 && touchDot > clientW/2)) {
-      console.log('next');
-      this.nextPage();
+    if (touchMove === 0) { //纯点击事件
+      //点击中心区域
+      if (touchDotx > clientW / 3 && touchDotx < clientW / 3 * 2 && touchDoty > clientY / 3 && touchDoty < clientY / 3 * 2) {
+        this.midaction();
+      }
+      if (touchDotx > clientW / 3 * 2) {
+        this.nextPage();
+      }
+      if (touchDotx < clientW / 3) {
+        this.lastPage();
+      }
+    } else {
+      // 向左滑动
+      if (touchMove - touchDotx <= -40 && time < 10) {
+        this.nextPage();
+      }
+      // 向右滑动
+      if (touchMove - touchDotx >= 40 && time < 10) {
+        this.lastPage();
+      }
     }
-    // 向右滑动 
-    if ((touchMove - touchDot >= 40 && time < 10) || (touchMove == 0 && touchDot < clientW/2)) {
-      console.log('last');
-      this.lastPage();
-    }
-    clearInterval(interval); // 清除setInterval 
+    clearInterval(interval); // 清除setInterval
     time = 0;
   },
   getContent: function (nid, cid, preLoad = false) {
@@ -321,14 +318,15 @@ Page({
             cname: res.data.data.chapter.name,
             currentPage: 0,
             totalPage: 0,
-            tx: 0
+            tx: 0,
+            totalChap: res.data.data.novel.last_chapter_id
           })
           setTimeout(() => {
             _this.setData({
               currentPage: 1,
               tx_time: 0.5,
             })
-            _this.countTotalPage();
+            _this.countTotalPage(true);
           }, 100);
         } else {
           wx.showModal({
@@ -347,16 +345,127 @@ Page({
       },
     })
   },
-  //获取总页码，有瑕疵-总宽度异常
-  countTotalPage: function () {
+  // 目录模块处理
+  showChapList: function (e) {
+    this.setData({
+      nav: 'none',
+      ziti: 'none',
+      zj: 'none'
+    })
+    this.setData({
+      mask_show: 'block',
+      tx_menu: 0,
+    })
+    let order = this.data.orderBy;
+    if (this.data.chap_list.length === 0) {
+      this.getChapList(page, order);
+    }
+  },
+  //隐藏目录层
+  hideMask: function (e) {
+    this.setData({
+      mask_show: 'none',
+      tx_menu: 100
+    })
+  },
+  //获取目录数据
+  getChapList: function (page, order) {
+    var _this = this;
+    wx.showLoading({
+      title: '加载中',
+    })
+    wx.request({
+      url: 'https://api.ytool.top/api/chapter',
+      data: {
+        novel_id: novelId,
+        page: page,
+        order: order
+      },
+      method: 'GET',
+      dataType: 'json',
+      responseType: 'text',
+      success: function (res) {
+        if (res.data.code != 0) {
+          let arr = res.data.data;
+          let chap_list = arr.map(function (obj) {
+            var robj = {};
+            robj.cid = obj.order_id
+            robj.name = obj.name;
+            return robj;
+          })
+          if (page != 1) { //第一页不拼接数据
+            chap_list = [..._this.data.chap_list, ...chap_list]
+          } else {
+            _this.setData({
+              scroll_top: 0
+            })
+          }
+          _this.setData({
+            chap_list: chap_list
+          })
+        } else {
+          wx.showToast({
+            title: res.data.msg,
+            icon: 'none'
+          })
+        }
+      },
+      fail: function (res) {
+        console.log('失败')
+      },
+      complete: function (res) {
+        wx.hideLoading();
+      },
+    })
+  },
+  //选择章节阅读
+  selectChap: function (e) {
+    chapterId = e.currentTarget.dataset.cid;
+    this.setData({
+      mask_show: 'none',
+      tx_menu: 100
+    })
+    this.getContent(novelId, chapterId);
+  },
+  //目录排序
+  orderDesc: function () {
+    let order = this.data.orderBy;
+    order = order == 'asc' ? 'desc' : 'asc';
+    this.setData({
+      orderBy: order
+    })
+    page = 1;
+    this.getChapList(page, order);
+  },
+  moreChap: function () {
+    page++;
+    this.getChapList(page, this.data.orderBy);
+  },
+  //获取总页码，有瑕疵--点太快，transition,没执行完，剩余宽度变多
+  countTotalPage: function (init = false) {
     var _this = this;
     wx.createSelectorQuery().select('.artical-action-mid').scrollOffset(function (rect) {
-      console.log(rect)
       scrollW = rect.scrollWidth; //获取滚动条宽度
-      var pages = Math.floor(scrollW / clientW);
+      var pages = Math.round(scrollW / clientW);
+      if (init !== true) {
+        pages--;
+      }
       _this.setData({
         totalPage: pages + _this.data.currentPage - 1,
       })
     }).exec()
+  },
+  goBack: function () {
+    wx.navigateBack({
+      delta: 1
+    })
+  },
+  lastChap:function () {
+    chapterId--;
+    this.getContent(novelId, chapterId);
+  },
+  nextChap:function () {
+    chapterId++;
+    this.getContent(novelId, chapterId);
   }
 })
