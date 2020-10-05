@@ -1,19 +1,68 @@
 //app.js
 App({
+  globalData:{
+    token: '',
+    userInfo: null,
+    cod: null,
+  },
   onLaunch: function () {
+    var that = this;
     // 展示本地存储能力
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
+    // var logs = wx.getStorageSync('logs') || []
+    // logs.unshift(Date.now())
+    // wx.setStorageSync('logs', logs)
 
     // 登录
 
     wx.login({
       success: res => {
-                  // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        if (res.code) {
+          wx.request({
+            url: 'https://api.ytool.top/api/login',
+            data: {
+              code: res.code
+            },
+            method: 'GET',
+            dataType: 'json',
+            responseType: 'text',
+            success: function (res) {
+              if (res.data.code == 1) {
+                wx.setStorage({
+                  key: 'token',
+                  data: res.data.data.token,
+                })
+                //设置全局token
+                that.globalData.token = res.data.data.token;
+              } else {
+                wx.showToast({
+                  title: '登录失败',
+                  icon: 'none',
+                  duration: 3000
+                })
+              }
+              //过审核用
+              let chk = 0;
+              if (res.data.data.chk) {
+                chk = 1;
+              }
+              wx.setStorage({
+                key: 'chk',
+                data: chk,
+              })
+            },
+            fail: function (res) {
+              wx.showToast({
+                title: '登录失败',
+                icon: 'none',
+                duration: 3000
+              })
+            },
+            complete: function (res) { },
+          })
+        }
       }
     })
-           
+
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -34,10 +83,22 @@ App({
         }
       }
     })
-    
+
   },
-  globalData: {
-    userInfo: null,
-    cod:null,
-  }
+  // 监听token属性
+  watch: function (method) {
+    var obj = this.globalData;
+    Object.defineProperty(obj, "token", {
+      configurable: true,
+      enumerable: true,
+      set: function (value) {
+        this._token = value;
+        method(value);
+      },
+      get: function () {
+        return this._token
+      }
+    })
+  },
+
 })

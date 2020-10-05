@@ -9,18 +9,19 @@ var clientY = '';
 var novelId = 0;
 var chapterId = 0;
 var page = 1;
+var _this = '';
 
 Page({
   data: {
     content: '',
     initFontSize: '20',
     cname: '',
-    colorArr: [{value: '#f7eee5', name: '米白', font: ''},
-      {value: '#e9dfc7', name: '纸张', font: '', id: "font_normal"},
-      {value: '#a4a4a4', name: '浅灰', font: ''},
-      {value: '#cdefce', name: '护眼', font: ''},
-      {value: '#283548', name: '灰蓝', font: '#7685a2', bottomcolor: '#fff'},
-      {value: '#0f1410', name: '夜间', font: '#4e534f', bottomcolor: 'rgba(255,255,255,0.7)', id: "font_night"}
+    colorArr: [{ value: '#f7eee5', name: '米白', font: '' },
+    { value: '#e9dfc7', name: '纸张', font: '', id: "font_normal" },
+    { value: '#a4a4a4', name: '浅灰', font: '' },
+    { value: '#cdefce', name: '护眼', font: '' },
+    { value: '#283548', name: '灰蓝', font: '#7685a2', bottomcolor: '#fff' },
+    { value: '#0f1410', name: '夜间', font: '#4e534f', bottomcolor: 'rgba(255,255,255,0.7)', id: "font_night" }
     ],
     nav: 'none',
     ziti: 'none',
@@ -43,6 +44,7 @@ Page({
     page = 1;
     // 本地提取字号大小
     var that = this;
+    _this = this;
     wx.getStorage({
       key: 'initFontSize',
       success: function (res) {
@@ -223,11 +225,16 @@ Page({
       this.getContent(novelId, chapterId);
     } else {
       this.countTotalPage();
-      console.log(this.data.tx)
       this.setData({
         tx: this.data.tx - 100,
         currentPage: this.data.currentPage + 1
       })
+    }
+    if (this.data.currentPage >= this.data.totalPage / 2 && this.data.currentPage != 0) {
+      let pre_chap = parseInt(chapterId) + 1;
+      if (!wx.getStorageSync('n_' + novelId + '_' + pre_chap)) {
+        this.getContent(novelId, pre_chap, true);
+      }
     }
   },
   // 触摸开始事件 
@@ -256,10 +263,10 @@ Page({
       if (touchDotx > clientW / 3 && touchDotx < clientW / 3 * 2 && touchDoty > clientY / 3 && touchDoty < clientY / 3 * 2) {
         this.midaction();
       }
-      if (touchDotx > clientW / 3 * 2) {
+      if (touchDotx > clientW / 3 * 2 || (touchDotx > clientW / 3 * 1 && touchDoty > clientY / 3 * 2)) {
         this.nextPage();
       }
-      if (touchDotx < clientW / 3) {
+      if (touchDotx < clientW / 3 || (touchDotx < clientW / 3 * 1 && touchDoty < clientY / 3 * 2)) {
         this.lastPage();
       }
     } else {
@@ -276,20 +283,24 @@ Page({
     time = 0;
   },
   getContent: function (nid, cid, preLoad = false) {
+    var n_key = 'n_' + nid + '_' + cid;
+    let res = wx.getStorageSync(n_key);
+    if (res) {
+      this.parseNovelData(res);
+      return;
+    }
     var header = {};
     var _this = this;
     if (preLoad == false) { // 不是预加载请求加header
-      var token = wx.getStorageSync('token');
-      if (token) {
-        header = {
-          'content-type': 'application/json',
-          'token': token
-        }
+      var token = wx.getStorageSync('token') || '';
+      header = {
+        'content-type': 'application/json',
+        'token': token
       }
+      wx.showLoading({
+        title: '加载中',
+      })
     }
-    wx.showLoading({
-      title: '加载中',
-    })
     wx.request({
       url: 'https://api.ytool.top/api/content',
       data: {
@@ -300,41 +311,21 @@ Page({
       method: 'GET',
       dataType: 'json',
       success: function (res) {
-        wx.hideLoading({
-          success: (res) => {},
-        })
-        if (res.data.code == 1) {
-          var content = res.data.data.chapter.content;
-          content = content.replace(/<p>/g, '&emsp;&emsp;');
-          content = content.replace(/<\/p>/g, '\n');
-          content = content.replace(/&nbsp;&nbsp;&nbsp;&nbsp;|;&nbsp;&nbsp;&nbsp;|;&nbsp;&nbsp;/g, '');
-          content = content.replace(/&nbsp;/g, '&emsp;&emsp;');
-          content = content.replace(/<br \/>\n<br \/>\n|<br\/><br\/>|<br \/><br \/>/g, '\n&emsp;&emsp;');
-          content = content.replace(/“/g, '"');
-          content = content.replace(/”/g, '"');
-          content = ' &emsp;&emsp;' + content;
-          _this.setData({
-            tx_time: 0,
-            content: content,
-            cname: res.data.data.chapter.name,
-            currentPage: 0,
-            totalPage: 0,
-            tx: 0,
-            totalChap: res.data.data.novel.last_chapter_id
-          })
-          setTimeout(() => {
-            _this.setData({
-              currentPage: 1,
-              tx_time: 0.5,
+        wx.hideLoading();
+        if (preLoad === false) {
+          if (res.data.code == 1) {
+            _this.parseNovelData(res.data.data);
+          } else {
+            wx.showModal({
+              title: '请求错误',
+              content: res.data.msg,
+              showCancel: false
             })
-            _this.countTotalPage(true);
-          }, 100);
+          }
         } else {
-          wx.showModal({
-            title: '请求错误',
-            content: res.data.msg,
-            showCancel: false
-          })
+          if (res.data.code == 1) {
+            wx.setStorageSync(n_key,res.data.data)
+          }
         }
       },
       fail: function (res) {
@@ -345,6 +336,35 @@ Page({
         })
       },
     })
+  },
+  //处理小说文本内容
+  parseNovelData(data) {
+    var _this = this;
+    var content = data.chapter.content;
+    content = content.replace(/<p>/g, '&emsp;&emsp;');
+    content = content.replace(/<\/p>/g, '\n');
+    content = content.replace(/&nbsp;&nbsp;&nbsp;&nbsp;|;&nbsp;&nbsp;&nbsp;|;&nbsp;&nbsp;/g, '');
+    content = content.replace(/&nbsp;/g, '&emsp;&emsp;');
+    content = content.replace(/<br \/>\n<br \/>\n|<br\/><br\/>|<br \/><br \/>/g, '\n&emsp;&emsp;');
+    content = content.replace(/“/g, '"');
+    content = content.replace(/”/g, '"');
+    content = ' &emsp;&emsp;' + content;
+    _this.setData({
+      tx_time: 0,
+      content: content,
+      cname: data.chapter.name,
+      currentPage: 0,
+      totalPage: 0,
+      tx: 0,
+      totalChap: data.novel.last_chapter_id
+    })
+    setTimeout(() => {
+      _this.setData({
+        currentPage: 1,
+        tx_time: 0.5,
+      })
+      _this.countTotalPage(true);
+    }, 100);
   },
   // 目录模块处理
   showChapList: function (e) {
@@ -357,6 +377,9 @@ Page({
       mask_show: 'block',
       tx_menu: 0,
     })
+    if (page == 1) {
+      page = Math.ceil(chapterId / 100);
+    }
     let order = this.data.orderBy;
     if (this.data.chap_list.length === 0) {
       this.getChapList(page, order);
@@ -461,11 +484,11 @@ Page({
       delta: 1
     })
   },
-  lastChap:function () {
+  lastChap: function () {
     chapterId--;
     this.getContent(novelId, chapterId);
   },
-  nextChap:function () {
+  nextChap: function () {
     chapterId++;
     this.getContent(novelId, chapterId);
   }
