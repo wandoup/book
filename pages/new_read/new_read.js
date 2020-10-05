@@ -312,20 +312,15 @@ Page({
       dataType: 'json',
       success: function (res) {
         wx.hideLoading();
-        if (preLoad === false) {
-          if (res.data.code == 1) {
-            _this.parseNovelData(res.data.data);
-          } else {
-            wx.showModal({
-              title: '请求错误',
-              content: res.data.msg,
-              showCancel: false
-            })
-          }
+        if (res.data.code == 1) {
+          _this.parseNovelData(res.data.data);
+          wx.setStorageSync(n_key, res.data.data)
         } else {
-          if (res.data.code == 1) {
-            wx.setStorageSync(n_key,res.data.data)
-          }
+          wx.showModal({
+            title: '请求错误',
+            content: res.data.msg,
+            showCancel: false
+          })
         }
       },
       fail: function (res) {
