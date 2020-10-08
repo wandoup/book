@@ -24,7 +24,7 @@ Page({
       "display: none"
     ],
     delbox: false,
-
+    loading:true,
   },
   //获取用户按下的时间
   bindTouchStart: function (e) {
@@ -35,14 +35,14 @@ Page({
     this.endTime = e.timeStamp;
   },
 
-  del: function (e) {
+  del:function(e){
     this.setData({
       delbox: true
     })
     novelId = e.currentTarget.dataset.novelid;
   },
 
-  butyes: function () {
+  butyes:function(){
     var than = this;
     wx.getStorage({
       key: 'token',
@@ -53,7 +53,7 @@ Page({
         }
         wx.request({
           url: 'https://api.ytool.top/api/mark',
-          data: { novel_id: novelId },
+          data: { novel_id: novelId},
           method: 'DELETE',
           dataType: 'json',
           responseType: 'text',
@@ -64,7 +64,7 @@ Page({
               delbox: false
             })
             console.log(than.data.books)
-            than.data.books.splice(than.data.books.length - 1, 1)
+            than.data.books.splice(than.data.books.length-1, 1)
             than.setData({
               books: than.data.books
             })
@@ -79,9 +79,9 @@ Page({
     })
   },
 
-  butno: function () {
+  butno:function(){
     this.setData({
-      delbox: false,
+      delbox:false,
     })
   },
 
@@ -91,12 +91,12 @@ Page({
     })
   },
 
-  gotoread: function (e) {
-    var than = this;
+  gotoread:function(e){
+    var than=this;
     if (than.endTime - than.startTime < 350) {
       console.log("点击")
-      novelId = e.currentTarget.dataset.novelid;
-      aname = e.currentTarget.dataset.name;
+      novelId=e.currentTarget.dataset.novelid;
+      aname=e.currentTarget.dataset.name;
       chapterId = e.currentTarget.dataset.chapterid;
       let jname = JSON.stringify(aname);
       let jnovelid = JSON.stringify(novelId);
@@ -104,20 +104,20 @@ Page({
 
       var jpage = 'new_read';
       wx.getSystemInfo({
-        success: function (res) {
-          if (res.platform == "devtools") {
-          } else if (res.platform == "ios") {
+        success:function(res){
+          if(res.platform == "devtools"){
+          }else if(res.platform == "ios"){
             jpage = 'read';
-          } else if (res.platform == "android") {
+          }else if(res.platform == "android"){
           }
         }
       })
       var isChk = wx.getStorageSync('chk');
-      if (isChk == 1) {
+      if (isChk == 1) {      
         jpage = 'read_c';
       }
       wx.navigateTo({
-        url: '../' + jpage + '/' + jpage + '?novel_id=' + jnovelid + '&chapter_id=' + jchapterid + '&name=' + jname
+        url: '../'+jpage+'/'+jpage+'?novel_id=' + jnovelid + '&chapter_id=' + jchapterid + '&name=' + jname
       })
     }
   },
@@ -126,9 +126,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+      
   },
-
+   
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -162,6 +162,7 @@ Page({
           if (res.data.code == 1) {
             for (var i = 0; i < res.data.data.length; i++) {
               than.setData({
+                loading:false,
                 ['books[' + i + '].img']:
                   res.data.data[i].novel.cover.replace(/http:/g, 'https:'),
                 ['books[' + i + '].aname']:
@@ -185,7 +186,7 @@ Page({
             mask: false,
           });
         },
-        complete: function (res) { 
+        complete: function (res) {
           wx.hideLoading();
         },
       })

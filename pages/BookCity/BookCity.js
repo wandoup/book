@@ -21,7 +21,7 @@ Page({
       bookid: "",
     }, ],
     jumpbox: false,
-
+    loading: true,
   },
 
   touch: function (e) {
@@ -79,7 +79,8 @@ Page({
       fail: function (res) {
         console.log('失败')
       },
-      complete: function (res) {},
+      complete: function (res) {
+      },
     })
   },
 
@@ -188,8 +189,6 @@ Page({
       dataType: 'json',
       responseType: 'text',
       success: function (res) {
-        console.log('获取书籍成功')
-        console.log(res)
         if (res.data.data.length > 0) {
           for (var i = 0; i < res.data.data.length; i++) {
             than.setData({
@@ -204,7 +203,11 @@ Page({
       fail: function (res) {
         console.log('失败')
       },
-      complete: function (res) {},
+      complete: function (res) {
+        than.setData({
+          loading:false,
+        })
+      },
     })
   },
   initData: function () {

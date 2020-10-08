@@ -1,4 +1,6 @@
 <!--pages/books/books.wxml-->
+<import src="books.skeleton.wxml"/>
+<template is="skeleton" wx-if="{{loading}}" />
 <view class="delout-box" wx:if="{{delbox}}">
   <view class="delete-box">
       <view class="del">

@@ -1,3 +1,5 @@
+<import src="BookCity.skeleton.wxml"/>
+<template is="skeleton" wx-if="{{loading}}" />
 <view class="left">
   <view wx:for="{{list}}" wx:key="index" 
   class='{{listcss==item?"list-touch":"list"}}'
