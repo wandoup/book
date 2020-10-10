@@ -313,7 +313,9 @@ Page({
       success: function (res) {
         wx.hideLoading();
         if (res.data.code == 1) {
-          _this.parseNovelData(res.data.data);
+          if(preLoad === false){
+            _this.parseNovelData(res.data.data);
+          }
           wx.setStorageSync(n_key, res.data.data)
         } else {
           wx.showModal({
@@ -353,6 +355,7 @@ Page({
       tx: 0,
       totalChap: data.novel.last_chapter_id
     })
+    _this.updateMark();
     setTimeout(() => {
       _this.setData({
         currentPage: 1,
@@ -360,6 +363,27 @@ Page({
       })
       _this.countTotalPage(true);
     }, 100);
+  },
+  /**
+   * 更新书签
+   */
+  updateMark: function(){
+    wx.request({
+      url: 'https://api.ytool.top/api/mark',
+      data: {
+        novel_id: novelId,
+        chapter_id: chapterId
+      },
+      header: {
+        'content-type': 'application/json',
+        'token': wx.getStorageSync('token')
+      },
+      method: 'PUT',
+      dataType: 'json',
+      success: function (res) {
+
+      }
+    })
   },
   // 目录模块处理
   showChapList: function (e) {
