@@ -1,0 +1,76 @@
+<!-- 文本 -->
+<view class="txt-container" style="background:{{bodyColor}}">
+  <view class="cname">{{cname}}</view>
+  <!-- 主体内容 -->
+  <scroll-view scroll-y='true' class="artical-action-mid" bindtouchstart="touchStart" bindtouchmove="touchMove"
+    bindtouchend="touchEnd">
+    <view class="m-read-content"
+      style="font-size:{{initFontSize}}px;transform: translateX({{tx}}%);transition-duration: {{tx_time}}s;">
+      <text class="content-text" decode="true">{{content}}</text>
+    </view>
+  </scroll-view>
+  <view class="pages">{{currentPage}}/{{totalPage}}</view>
+</view>
+<!-- 字体调节 -->
+<view class="top-nav-pannel font-container" style="display:{{ziti}}">
+  <view class="child-mod">
+    <view class="span">字号</view>
+    <text class="spe-button" bindtap="bindBig">大</text>
+    <text class="spe-button" style="margin-left:10px;" bindtap="bindSmall">小</text>
+  </view>
+  <view class="child-mod">
+    <view class="span">背景</view>
+    <block wx:for="{{colorArr}}" wx:for-item="color" wx:key="this">
+      <view class="bk-container {{_num==index?'bk-container-current':''}}" data-num="{{index}}"
+        style="background-color:{{color.value}}" bindtap="bgChange"></view>
+    </block>
+  </view>
+</view>
+<view class="mask" style="display: {{mask_show}}" bindtap="hideMask"></view>
+<view class="chapters" style="transform: translateX({{tx_menu}}%);">
+  <view class="title">目录</view>
+    <view class="chap-info">
+      <view>共{{totalChap}}章</view>
+      <view bindtap="orderDesc" wx:if="{{orderBy == 'asc'}}">倒序</view>
+      <view bindtap="orderDesc" wx:if="{{orderBy == 'desc'}}">正序</view>
+    </view>
+    <scroll-view scroll-y class="list-con" bindscrolltolower="moreChap" scroll-top="{{scroll_top}}">
+      <view class="tips">正文卷</view>
+      <view wx:for="{{chap_list}}" wx:key="index"
+            bindtap="selectChap"
+            data-cid="{{item.cid}}">
+        <text>{{item.name}}</text>
+      </view>
+    </scroll-view>
+</view>
+
+<!-- 底部 -->
+<view class="bottom-nav" style="display:{{nav}}">
+  <view class="icon-back" bindtap="goBack">
+  <view class="arrow"></view>
+  </view>
+    <view class="up" bindtap="lastChap">上一章</view>
+    <view class="down" bindtap="nextChap">下一章</view>
+  <view class="item" bindtap="showChapList">
+    <view class="item-warp">
+      <view class="icon-menu"></view>
+      <view class="icon-text">目录</view>
+    </view>
+  </view>
+  <view class="item current" bindtap="zitiaction">
+    <view class="item-warp">
+      <view class="icon-ft"></view>
+      <view class="icon-text">字体</view>
+    </view>
+  </view>
+  <view class="item" bindtap="dayNight">
+    <view class="item-warp" wx:if="{{daynight}}">
+      <view class="icon-day"></view>
+      <view class="icon-text">白天</view>
+    </view>
+    <view class="item-warp" wx:else>
+      <view class="icon-night"></view>
+      <view class="icon-text">夜间</view>
+    </view>
+  </view>
+</view>

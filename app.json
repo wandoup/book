@@ -1,0 +1,55 @@
+{
+  "pages": [
+    "pages/books/books",
+    "pages/personal/personal",
+    "pages/index/index",
+    "pages/search/search",
+    "pages/logs/logs",
+    "pages/BookCity/BookCity",
+    "pages/details/details",
+    "pages/read/read",
+    "pages/catalog/catalog",
+    "pages/history/history",
+    "pages/collection/collection",
+    "pages/new_read/new_read",
+    "pages/read_c/read_c"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#ccc",
+    "navigationBarTitleText": "豌豆炮OvO",
+    "navigationBarTextStyle": "black"
+
+  },
+  "tabBar": {
+    "color":"#000",
+    "selectedColor":"#e8989a",
+    "list": [
+      {
+        "pagePath": "pages/books/books",
+        "text": "书签",
+        "iconPath": "./images/books.png",
+        "selectedIconPath": "./images/bookscl.png"
+      },{
+        "pagePath": "pages/BookCity/BookCity",
+        "text": "分类",
+        "iconPath": "./images/city.png",
+        "selectedIconPath": "./images/citycl.png"
+      },
+      {
+        "pagePath": "pages/search/search",
+        "text": "搜索",
+        "iconPath": "./images/tabsearch.png",
+        "selectedIconPath": "./images/tabsearchcl.png"
+      },
+      {
+        "pagePath": "pages/personal/personal",
+        "text": "我的",
+        "iconPath": "./images/personal.png",
+        "selectedIconPath": "./images/personalcl.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

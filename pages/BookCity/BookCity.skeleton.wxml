@@ -1,0 +1,182 @@
+<!--
+此文件为开发者工具生成，生成时间: 2020/10/8 下午10:37:32 
+使用方法：
+在 E:\Download\book\pages\BookCity\BookCity.wxml 引入模板
+
+```
+<import src="BookCity.skeleton.wxml"/>
+<template is="skeleton" wx-if="{{loading}}" />
+```
+
+在 E:\Download\book\pages\BookCity\BookCity.wxss 中引入样式
+```
+@import "./BookCity.skeleton.wxss";
+```
+
+更多详细信息可以参考文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/skeleton.html
+-->
+<template name="skeleton">
+  <view class="sk-container">
+    <view class="left">
+      <view class="list-touch" data-listtitle="玄幻" data-num="3">
+        <text class="sk-transparent sk-text-23-3333-470 sk-text" style="background-position-x: 50%;">
+          玄幻
+        </text>
+      </view>
+      <view class="list" data-listtitle="奇幻" data-num="4">
+        <text class="sk-transparent sk-text-23-3333-553 sk-text" style="background-position-x: 50%;">
+          奇幻
+        </text>
+      </view>
+      <view class="list" data-listtitle="武侠" data-num="5">
+        <text class="sk-transparent sk-text-23-3333-423 sk-text" style="background-position-x: 50%;">
+          武侠
+        </text>
+      </view>
+      <view class="list" data-listtitle="仙侠" data-num="6">
+        <text class="sk-transparent sk-text-23-3333-44 sk-text" style="background-position-x: 50%;">
+          仙侠
+        </text>
+      </view>
+      <view class="list" data-listtitle="都市" data-num="7">
+        <text class="sk-transparent sk-text-23-3333-893 sk-text" style="background-position-x: 50%;">
+          都市
+        </text>
+      </view>
+      <view class="list" data-listtitle="历史" data-num="8">
+        <text class="sk-transparent sk-text-23-3333-611 sk-text" style="background-position-x: 50%;">
+          历史
+        </text>
+      </view>
+      <view class="list" data-listtitle="军事" data-num="9">
+        <text class="sk-transparent sk-text-23-3333-919 sk-text" style="background-position-x: 50%;">
+          军事
+        </text>
+      </view>
+      <view class="list" data-listtitle="游戏" data-num="10">
+        <text class="sk-transparent sk-text-23-3333-723 sk-text" style="background-position-x: 50%;">
+          游戏
+        </text>
+      </view>
+      <view class="list" data-listtitle="竞技" data-num="11">
+        <text class="sk-transparent sk-text-23-3333-903 sk-text" style="background-position-x: 50%;">
+          竞技
+        </text>
+      </view>
+      <view class="list" data-listtitle="科幻" data-num="12">
+        <text class="sk-transparent sk-text-23-3333-942 sk-text" style="background-position-x: 50%;">
+          科幻
+        </text>
+      </view>
+      <view class="list" data-listtitle="灵异" data-num="13">
+        <text class="sk-transparent sk-text-23-3333-232 sk-text" style="background-position-x: 50%;">
+          灵异
+        </text>
+      </view>
+      <view class="list" data-listtitle="其他" data-num="14">
+        <text class="sk-transparent sk-text-23-3333-124 sk-text" style="background-position-x: 50%;">
+          其他
+        </text>
+      </view>
+    </view>
+    <view class="right">
+      <view class="booklist" data-bookid="9314" style="border: none;">
+        <image class="img sk-image">
+        </image>
+        <view class="bookinformation">
+          <text class="name sk-transparent sk-text-14-2857-833 sk-text">
+            1.剑来
+          </text>
+          <view class="author">
+            <text class="sk-transparent sk-text-14-2857-700 sk-text">
+              作者：烽火戏诸侯
+            </text>
+          </view>
+        </view>
+      </view>
+      <view class="booklist" data-bookid="3133" style="border: none;">
+        <image class="img sk-image">
+        </image>
+        <view class="bookinformation">
+          <text class="name sk-transparent sk-text-14-2857-914 sk-text">
+            2.沧元图
+          </text>
+          <view class="author">
+            <text class="sk-transparent sk-text-14-2857-574 sk-text">
+              作者：我吃西红柿
+            </text>
+          </view>
+        </view>
+      </view>
+      <view class="booklist" data-bookid="10917" style="border: none;">
+        <image class="img sk-image">
+        </image>
+        <view class="bookinformation">
+          <text class="name sk-transparent sk-text-14-2857-991 sk-text">
+            3.武炼巅峰
+          </text>
+          <view class="author">
+            <text class="sk-transparent sk-text-14-2857-875 sk-text">
+              作者：神笔张良
+            </text>
+          </view>
+        </view>
+      </view>
+      <view class="booklist" data-bookid="653" style="border: none;">
+        <image class="img sk-image">
+        </image>
+        <view class="bookinformation">
+          <text class="name sk-transparent sk-text-14-2857-598 sk-text">
+            4.校花的贴身高手
+          </text>
+          <view class="author">
+            <text class="sk-transparent sk-text-14-2857-431 sk-text">
+              作者：鱼人二代
+            </text>
+          </view>
+        </view>
+      </view>
+      <view class="booklist" data-bookid="6462" style="border: none;">
+        <image class="img sk-image">
+        </image>
+        <view class="bookinformation">
+          <text class="name sk-transparent sk-text-14-2857-233 sk-text">
+            5.三寸人间
+          </text>
+          <view class="author">
+            <text class="sk-transparent sk-text-14-2857-253 sk-text">
+              作者：耳根 三寸人间
+            </text>
+          </view>
+        </view>
+      </view>
+      <view class="booklist" data-bookid="6031" style="border: none;">
+        <image class="img sk-image">
+        </image>
+        <view class="bookinformation">
+          <text class="name sk-transparent sk-text-14-2857-88 sk-text">
+            6.万界仙王
+          </text>
+          <view class="author">
+            <text class="sk-transparent sk-text-14-2857-50 sk-text">
+              作者：西门飘血
+            </text>
+          </view>
+        </view>
+      </view>
+      <view class="booklist" data-bookid="13424" style="border: none;">
+        <image class="img sk-image">
+        </image>
+        <view class="bookinformation">
+          <text class="name sk-transparent sk-text-14-2857-701 sk-text">
+            7.龙骑士的快乐
+          </text>
+        </view>
+      </view>
+    </view>
+    <view class="sk-loading-spinner">
+      <view class="circular">
+      </view>
+    </view>
+  </view>
+</template>

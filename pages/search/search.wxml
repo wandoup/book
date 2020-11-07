@@ -1,0 +1,15 @@
+<view class="search">
+  <input placeholder="请输入要搜索的书名" class="search-input" 
+  bindinput="inputval"/>
+  <image src="../../images/search.png" class="search-image"
+  bindtap="search"></image>
+</view>
+<view class="book-title" wx:for="{{books}}" wx:key="index"
+  style="{{isShow}}">
+  <image src="{{item.img}}" class="title-img"></image>
+  <view class="book" bindtap="gotodetails"
+  data-bookid="{{item.id}}">
+    <text class="name">{{item.name}}</text>
+    <text class="author">{{item.author}}</text>
+  </view>
+</view>

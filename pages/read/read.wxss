@@ -1,0 +1,114 @@
+.box{
+  padding:0 20rpx 20rpx 20rpx;
+  height:auto;
+  position: relative;
+}
+.bgnight{
+  background:rgba(0, 0, 0, 0.8);
+  color: rgba(255, 255, 255, 0.6);
+}
+.bg{
+  position: absolute;
+  width:100%;
+  height:100%;
+  top:0;
+  left:0;
+  z-index: -1;
+  background:rgba(206, 186, 151,1);
+}
+.nav{
+  position: fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:35rpx;
+  background:rgba(206, 186, 151,1);
+}
+.navnight{
+  position: fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:35rpx;
+}
+.nav-bg{
+  width:100%;
+  height:100%;
+}
+.frame{
+  height:70rpx;
+}
+.back{
+  position: fixed;
+  top:50rpx;
+  left:10rpx;
+  width:60rpx;
+  height:50rpx;
+  text-align: center;
+  line-height: 50rpx;
+  z-index:99;
+  font-size: 42rpx;
+  color:#fff;
+}
+.name{
+  font-size:28rpx;
+  color: rgba(0, 0, 0, 0.6);
+  text-align:center;
+}
+.title{
+  height:100rpx;
+  font-size: 38rpx;
+  font-weight:bold;
+  margin-top: 20rpx;
+  overflow: hidden;
+}
+.content{
+  margin-top:20rpx;
+  width:100%;
+}
+.menu{
+  width:60%;
+  height:90%;
+  position:fixed;
+  top:0;
+  left:0;
+}
+.buttonbox{
+  position:fixed;
+  width:100%;
+  top:8%;
+  left:0;
+}
+.buttongo{
+  width:140rpx;
+  height:70rpx;
+  line-height:70rpx;
+  text-align:center;
+  color:rgb(255, 255, 255);
+  background:rgba(245, 125, 125, 1);
+  position:fixed;
+}
+.buttonup{
+  top:46%;
+  left:0;
+}
+.buttondown{
+  top:46%;
+  right:0;
+}
+.buttontitle{
+  position: fixed;
+  bottom:0;
+  width:100%;
+  height:100rpx;
+  display: flex;
+}
+.button{
+  width:25%;
+  height:100rpx;
+  line-height:100rpx;
+  font-size:32rpx;
+  text-align: center;
+  color:rgb(255, 255, 255);
+  background:rgba(245, 125, 125, 1);
+}

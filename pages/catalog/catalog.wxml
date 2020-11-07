@@ -1,0 +1,12 @@
+<view>
+  <view class="catalog-name">
+    <text>{{bookname}}</text>
+  </view>
+  <view class="catalog" wx:for="{{catalog}}" wx:key="index"
+  bindtap="gotoread"
+  data-novelid="{{item.novelid}}" 
+  data-name="{{bookname}}" 
+  data-chapterid="{{item.chapterid}}">
+    <text>{{item.name}}</text>
+  </view>
+</view>

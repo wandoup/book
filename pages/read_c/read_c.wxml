@@ -1,0 +1,16 @@
+<view class="{{night==true?'box bgnight':'box'}}" style="{{isShow}}">
+  <!-- <image src="../../images/background.jpg" class="bg"></image> -->
+  <view class="bg"></view>
+  <view class="{{night==true?'navnight':'nav'}}">
+    <!-- <image src="../../images/navbg.jpg" class="nav-bg"></image> -->
+  </view>
+  <view class="frame"></view>
+  <view class="name">
+    <text>{{book.name}}</text>
+  </view>
+  <view class="content">
+    <text class="content-text" style="{{fontsize}}"
+    decode="{{true}}">{{book.content}}</text> 
+  </view>
+  <view class="menu" bindtap="menushow"></view>
+</view>

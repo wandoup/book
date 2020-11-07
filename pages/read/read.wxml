@@ -1,0 +1,45 @@
+<view class="{{night==true?'box bgnight':'box'}}" style="{{isShow}}">
+  <!-- <image src="../../images/background.jpg" class="bg"></image> -->
+  <view class="bg"></view>
+  <view class="{{night==true?'navnight':'nav'}}">
+    <!-- <image src="../../images/navbg.jpg" class="nav-bg"></image> -->
+  </view>
+  <view class="frame"></view>
+  <view class="name">
+    <text>{{book.name}}</text>
+  </view>
+  <view class="title">
+    <text>{{book.title}}</text>
+  </view>
+  <view class="content">
+    <text class="content-text" style="{{fontsize}}"
+    decode="{{true}}">{{book.content}}</text> 
+  </view>
+  <view class="menu" bindtap="menushow"></view>
+  <view class="buttonbox" wx:if="{{menuShow}}">
+    <view class="buttontitle">
+      <view class="back" bindtap="back">
+        {{'<'}}
+      </view>
+      <view class="button" bindtap="gotocatalog"
+      data-bookname="{{book.name}}">
+        <text>目录</text>
+      </view>
+      <view class="button" bindtap="fontdown">
+        <text>A-</text>
+      </view>
+      <view class="button" bindtap="fontup">
+        <text>A+</text>
+      </view>
+      <view class="button" bindtap="night">
+        <text>夜间</text>
+      </view>
+    </view>
+    <view class="buttonup buttongo" bindtap="gotoup">
+      <text>上一章</text>
+    </view>
+    <view class="buttondown buttongo" bindtap="gotodown">
+      <text>下一章</text>
+    </view>
+  </view>
+</view>

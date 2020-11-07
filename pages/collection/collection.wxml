@@ -1,0 +1,13 @@
+<view>
+  <view class="collection-title">
+    <text>我的收藏</text>
+  </view>
+  <view class="collection" wx:for="{{collection}}" wx:key="index">
+    <view class="collection-name">
+      <text>{{item.name}}</text>
+    </view>
+    <view class="collection-author">
+      <text>{{item.author}}</text>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,30 @@
+<view class="details">
+  <image src="{{img}}" class="details-img"></image>
+  <view class="details-na">
+    <view class="details-name">
+      <text>{{name}}</text>
+    </view>
+    <view class="details-author">
+      <text>{{author}}</text>
+    </view>
+  </view>
+</view>
+<view class="introduction-box">
+  <text>简介</text>
+  <view class="introduction">
+    <text>{{introduction}}</text>
+  </view>
+</view>
+<view class="catalog-box" bindtap="gotocatalog"
+  data-bookid="{{bookid}}"
+  data-bookname="{{name}}">
+  <text class="catalog">查看目录</text>
+  <!-- <text class="catalog-text">最后更新:2019-12-16</text> -->
+  <image src="../../images/arrow_right.png" class="catalog-img"></image>
+</view>
+<view class="details-list">
+  <text class="details-download"></text>
+  <text class="details-read" bindtap="gotoread">阅读</text>
+  <text class="details-add" bindtap="addbook"
+  data-bookaddid="{{bookid}}">加入书架</text>
+</view>
