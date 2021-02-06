@@ -337,15 +337,15 @@ Page({
   //处理小说文本内容
   parseNovelData(data) {
     var _this = this;
-    var content = data.chapter.content;
+    var content = data.chapter.content;   
     content = content.replace(/<p>/g, '&emsp;&emsp;');
     content = content.replace(/<\/p>/g, '\n');
     content = content.replace(/&nbsp;&nbsp;&nbsp;&nbsp;|;&nbsp;&nbsp;&nbsp;|;&nbsp;&nbsp;/g, '');
     content = content.replace(/&nbsp;/g, '&emsp;&emsp;');
-    content = content.replace(/<br \/>\n<br \/>\n|<br\/><br\/>|<br \/><br \/>/g, '\n&emsp;&emsp;');
+    content = content.replace(/<br \/>\r\n<br \/>\r\n|<br \/>\n<br \/>\n|<br\/><br\/>|<br \/><br \/>/g, '\n&emsp;&emsp;');
     content = content.replace(/“/g, '"');
     content = content.replace(/”/g, '"');
-    content = ' &emsp;&emsp;' + content;
+    // content = ' &emsp;&emsp;' + content;
     _this.setData({
       tx_time: 0,
       content: content,

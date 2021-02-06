@@ -142,54 +142,65 @@ Page({
   onShow: function () {
     var than = this;
     //监听设置后
-    app.watch(function (token) {
-      // 此处执行登陆后的业务
-      header = {
-        'content-type': 'application/json',
-        'token': token
-      }
-      wx.showLoading({
-        title: '加载中',
-        mask: true,
+    let user_token = wx.getStorageSync('token');
+    if(user_token){
+      than.getMark(user_token);
+    }else{
+      app.watch(function (token) {
+        // 此处执行登陆后的业务
+        than.getMark(token);
+        wx.showLoading({
+          title: '加载中',
+          mask: true,
+        })
+  
       })
-      wx.request({
-        url: 'https://api.ytool.top/api/mark',
-        method: 'GET',
-        dataType: 'json',
-        responseType: 'text',
-        header: header,
-        success: function (res) {
-          if (res.data.code == 1) {
-            for (var i = 0; i < res.data.data.length; i++) {
-              than.setData({
-                loading:false,
-                ['books[' + i + '].img']:
-                  res.data.data[i].novel.cover.replace(/http:/g, 'https:'),
-                ['books[' + i + '].aname']:
-                  res.data.data[i].novel.name,
-                ['books[' + i + '].novel_id']:
-                  res.data.data[i].novel_id,
-                ['books[' + i + '].chapter_id']:
-                  res.data.data[i].chapter_id
-              })
-            }
+    }
+
+  },
+  getMark(token){
+    var than = this;
+    header = {
+      'content-type': 'application/json',
+      'token': token
+    }
+    wx.request({
+      url: 'https://api.ytool.top/api/mark',
+      method: 'GET',
+      dataType: 'json',
+      responseType: 'text',
+      header: header,
+      success: function (res) {
+        if (res.data.code == 1) {
+          for (var i = 0; i < res.data.data.length; i++) {
             than.setData({
-              isShow: "display: block"
+              loading:false,
+              ['books[' + i + '].img']:
+                res.data.data[i].novel.cover.replace(/http:/g, 'https:'),
+              ['books[' + i + '].aname']:
+                res.data.data[i].novel.name,
+              ['books[' + i + '].novel_id']:
+                res.data.data[i].novel_id,
+              ['books[' + i + '].chapter_id']:
+                res.data.data[i].chapter_id
             })
           }
-        },
-        fail: function (res) {
-          wx.wx.showToast({
-            title: '加载失败',
-            icon: 'fail',
-            duration: 1500,
-            mask: false,
-          });
-        },
-        complete: function (res) {
-          wx.hideLoading();
-        },
-      })
+          than.setData({
+            isShow: "display: block"
+          })
+        }
+      },
+      fail: function (res) {
+        wx.wx.showToast({
+          title: '加载失败',
+          icon: 'fail',
+          duration: 1500,
+          mask: false,
+        });
+      },
+      complete: function (res) {
+        wx.hideLoading();
+      },
     })
   },
 

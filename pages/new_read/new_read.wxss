@@ -17,7 +17,7 @@ view,scroll-view,text,block{
 }
 
 .m-read-content {
-  padding: 10rpx 48rpx;
+  padding: 0 48rpx;
   column-count: 1;
   column-gap: 96rpx;
   -webkit-column-count: 1;
@@ -34,7 +34,7 @@ view,scroll-view,text,block{
   height: 90%;
   position: absolute;
   left: 0px;
-  top: 100rpx;
+  top: 150rpx;
   border-radius: 20px;
   overflow: scroll;
 }
@@ -49,7 +49,7 @@ view,scroll-view,text,block{
 
 .cname {
   font-size: 25rpx;
-  margin: 50rpx 20rpx;
+  margin: 90rpx 20rpx;
   font-weight: 400;
   color: rgba(0, 0, 0, 0.3);
 }
