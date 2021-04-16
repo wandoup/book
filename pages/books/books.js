@@ -173,7 +173,7 @@ Page({
       success: function (res) {
         if (res.data.code == 1) {
           for (var i = 0; i < res.data.data.length; i++) {
-            than.setData({
+            res.data.data[i].novel && than.setData({
               loading:false,
               ['books[' + i + '].img']:
                 res.data.data[i].novel.cover.replace(/http:/g, 'https:'),

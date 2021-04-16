@@ -318,7 +318,7 @@ Page({
           }
           wx.setStorageSync(n_key, res.data.data)
         } else {
-          wx.showModal({
+          preLoad === false && wx.showModal({
             title: '请求错误',
             content: res.data.msg,
             showCancel: false
