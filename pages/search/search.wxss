@@ -4,12 +4,12 @@
   border-bottom:1rpx solid rgba(0,0,0,0.3);
 }
 .search-input{
-  height:60rpx;
-  width:80%;
-  background:#ccc;
-  float:left;
-  padding-left:15rpx;
-  border-radius:20rpx;
+  height: 60rpx;
+  width: 80%;
+  background: #efefef;
+  float: left;
+  padding-left: 15rpx;
+  border-radius: 10rpx;
 }
 .search-image{
   width:60rpx;

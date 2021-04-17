@@ -303,3 +303,6 @@ view,scroll-view,text,block{
 .down{
   right: 0;
 }
+.current{
+  color: rgb(224, 96, 96);
+}

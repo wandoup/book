@@ -434,6 +434,7 @@ Page({
             var robj = {};
             robj.cid = obj.order_id
             robj.name = obj.name;
+            robj.now = obj.order_id == chapterId ? true : false;
             return robj;
           })
           if (page != 1) { //第一页不拼接数据

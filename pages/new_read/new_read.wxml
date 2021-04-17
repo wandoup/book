@@ -39,7 +39,7 @@
       <view wx:for="{{chap_list}}" wx:key="index"
             bindtap="selectChap"
             data-cid="{{item.cid}}">
-        <text>{{item.name}}</text>
+        <text class="{{item.now == true ? 'current':''}}">{{item.name}}</text>
       </view>
     </scroll-view>
 </view>

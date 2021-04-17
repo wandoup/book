@@ -17,7 +17,8 @@ Page({
         img: '',
         aname: '',
         novel_id: '',
-        chapter_id: ''
+        chapter_id: '',
+        status:''
       },
     ],
     isShow: [
@@ -173,6 +174,18 @@ Page({
       success: function (res) {
         if (res.data.code == 1) {
           for (var i = 0; i < res.data.data.length; i++) {
+            let row = res.data.data[i];
+            let status = '';
+            
+            if(row.chapter_id == row.novel.last_chapter_id){
+              if(row.novel.is_over == 0){
+                status = '已读到最新章';
+              }else{
+                status = '已读完';
+              }
+            }else{
+              status = row.novel.last_chapter_id - row.chapter_id + '章未读'
+            }
             res.data.data[i].novel && than.setData({
               loading:false,
               ['books[' + i + '].img']:
@@ -182,7 +195,8 @@ Page({
               ['books[' + i + '].novel_id']:
                 res.data.data[i].novel_id,
               ['books[' + i + '].chapter_id']:
-                res.data.data[i].chapter_id
+                res.data.data[i].chapter_id,
+              ['books[' + i + '].status']:status
             })
           }
           than.setData({
