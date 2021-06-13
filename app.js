@@ -59,7 +59,6 @@ App({
     }else{
       wx.login({
         success: res => {
-          console.log(999);
           if (res.code) {
             wx.request({
               url: 'https://api.ytool.top/api/login',
@@ -70,7 +69,6 @@ App({
               dataType: 'json',
               responseType: 'text',
               success: function (res) {
-                console.log(5435)
                 if (res.data.code == 1) {
                   wx.setStorage({
                     key: 'token',

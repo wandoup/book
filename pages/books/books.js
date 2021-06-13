@@ -26,6 +26,8 @@ Page({
     ],
     delbox: false,
     loading:true,
+    kfx: 317,
+    kfy: 440,
   },
   //获取用户按下的时间
   bindTouchStart: function (e) {
@@ -127,7 +129,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-      
+    this.moveEnd();
   },
    
   /**
@@ -212,6 +214,31 @@ Page({
     })
   },
 
+
+  moveEnd:function (e) {
+    var average = 375 / 750 * wx.getSystemInfoSync().windowWidth;
+    if(e){
+      var xNumLeft = 32 / 750 * wx.getSystemInfoSync().windowWidth;
+      var xNumRight = 648 / 750 * wx.getSystemInfoSync().windowWidth;
+      var x = e.changedTouches[0].pageX;
+      var yNum = e.changedTouches[0].clientY;
+    }else{
+      yNum = this.data.kfy;
+      xNumRight = 648 / 750 * wx.getSystemInfoSync().windowWidth;
+      x = 600;
+    }
+    if (x < average) {
+      this.setData({
+        kfx: xNumLeft,
+        kfy: yNum
+      })
+    } else {
+      this.setData({
+        kfx: xNumRight,
+        kfy: yNum
+      })
+    }
+  },
   /**
    * 生命周期函数--监听页面隐藏
    */

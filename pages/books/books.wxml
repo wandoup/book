@@ -1,5 +1,11 @@
 <!--pages/books/books.wxml-->
 <import src="books.skeleton.wxml"/>
+<movable-area>
+    <movable-view bindtouchend="moveEnd" inertia="true" damping="20" friction="2" x="{{kfx}}" y="{{kfy}}" direction="all">
+        <view class="kf-con">
+            <button class="contact" open-type="contact"></button>
+        </view>
+    </movable-view>
 <template is="skeleton" wx-if="{{loading}}" />
 <view class="delout-box" wx:if="{{delbox}}">
   <view class="delete-box">
@@ -34,3 +40,4 @@
         <image src="../../images/increase.png" class="bookadd-image"></image>
     </view>
 </view>
+</movable-area>
