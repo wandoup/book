@@ -143,21 +143,9 @@ Page({
   onShow: function () {
     var than = this;
     //监听设置后
-    let user_token = wx.getStorageSync('token');
-    if(user_token){
+    app.getToken(function (user_token) {
       than.getMark(user_token);
-    }else{
-      app.watch(function (token) {
-        // 此处执行登陆后的业务
-        than.getMark(token);
-        wx.showLoading({
-          title: '加载中',
-          mask: true,
-        })
-  
-      })
-    }
-
+    }, false);
   },
   getMark(token){
     var than = this;
@@ -205,6 +193,7 @@ Page({
         }
       },
       fail: function (res) {
+        console.log(res)
         wx.wx.showToast({
           title: '加载失败',
           icon: 'fail',
@@ -213,6 +202,11 @@ Page({
         });
       },
       complete: function (res) {
+        if(res.data.code == 401){
+          app.getToken(function (user_token) {
+            than.getMark(user_token);
+          },true);
+        }
         wx.hideLoading();
       },
     })

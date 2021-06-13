@@ -237,7 +237,7 @@ Page({
       }
     }
   },
-  // 触摸开始事件 
+  // 触摸开始事件
   touchStart: function (e) {
     touchDotx = e.touches[0].pageX; // 获取触摸时的原点
     touchDoty = e.touches[0].pageY; // 获取触摸时的原点
@@ -247,7 +247,7 @@ Page({
     }, 100);
     touchMove = 0;
   },
-  // 触摸移动事件 
+  // 触摸移动事件
   touchMove: function (e) {
     this.setData({
       nav: 'none',
@@ -256,7 +256,7 @@ Page({
     })
     touchMove = e.touches[0].pageX;
   },
-  // 触摸结束事件 
+  // 触摸结束事件
   touchEnd: function (e) {
     if (touchMove === 0) { //纯点击事件
       //点击中心区域
@@ -337,7 +337,7 @@ Page({
   //处理小说文本内容
   parseNovelData(data) {
     var _this = this;
-    var content = data.chapter.content;   
+    var content = data.chapter.content;
     content = content.replace(/<p>/g, '&emsp;&emsp;');
     content = content.replace(/<\/p>/g, '\n');
     content = content.replace(/&nbsp;&nbsp;&nbsp;&nbsp;|;&nbsp;&nbsp;&nbsp;|;&nbsp;&nbsp;/g, '');
@@ -488,16 +488,18 @@ Page({
   //获取总页码，有瑕疵--点太快，transition,没执行完，剩余宽度变多
   countTotalPage: function (init = false) {
     var _this = this;
-    wx.createSelectorQuery().select('.artical-action-mid').scrollOffset(function (rect) {
-      scrollW = rect.scrollWidth; //获取滚动条宽度
-      var pages = Math.round(scrollW / clientW);
-      if (init !== true) {
-        pages--;
-      }
-      _this.setData({
-        totalPage: pages + _this.data.currentPage - 1,
-      })
-    }).exec()
+    setTimeout(()=>{
+      wx.createSelectorQuery().select('.artical-action-mid').scrollOffset(function (rect) {
+        scrollW = rect.scrollWidth; //获取滚动条宽度
+        var pages = Math.round(scrollW / clientW);
+        if (init !== true) {
+          pages--;
+        }
+        _this.setData({
+          totalPage: pages + _this.data.currentPage - 1,
+        })
+      }).exec()
+    },600)
   },
   goBack: function () {
     wx.navigateBack({
