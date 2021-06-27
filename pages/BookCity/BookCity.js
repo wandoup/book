@@ -117,28 +117,28 @@ Page({
           console.log('获取书籍成功')
           console.log(res)
           if (res.data.data!=null&&res.data.data.length > 0) {
-            than.data.books.splice(0, than.data.books.length)
-            than.setData({
-              books: than.data.books
-            })
-            for (var i = 0; i < res.data.data.length; i++) {
+            var j = than.data.books.length;
+            var i = 0;
+            for (i = 0; i < res.data.data.length; i++) {
+              
               than.setData({
-                ['books[' + i + '].src']: res.data.data[i].cover.replace(/http:/g, 'https:'),
-                ['books[' + i + '].name']: res.data.data[i].name,
-                ['books[' + i + '].author']: res.data.data[i].author.name,
-                ['books[' + i + '].bookid']: res.data.data[i].id,
+                ['books[' + j + '].src']: res.data.data[i].cover.replace(/http:/g, 'https:'),
+                ['books[' + j + '].name']: res.data.data[i].name,
+                ['books[' + j + '].author']: res.data.data[i].author.name,
+                ['books[' + j + '].bookid']: res.data.data[i].id,
               })
+              j++;
             }
-            if (wx.pageScrollTo) {
-              wx.pageScrollTo({
-                scrollTop: 0
-              })
-            } else {
-              wx.showModal({
-                title: '提示',
-                content: '当前微信版本过低，请升级到最新微信版本后重试。'
-              })
-            }
+            // if (wx.pageScrollTo) {
+            //   wx.pageScrollTo({
+            //     scrollTop: 0
+            //   })
+            // } else {
+            //   wx.showModal({
+            //     title: '提示',
+            //     content: '当前微信版本过低，请升级到最新微信版本后重试。'
+            //   })
+            // }
           }else {
             wx.showToast({
               title: '此分类下暂无小说',
@@ -259,9 +259,10 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    this.setData({
-      jumpbox: true
-    })
+    this.butyes();
+    // this.setData({
+    //   jumpbox: true
+    // })
   },
 
   /**

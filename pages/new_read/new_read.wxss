@@ -30,16 +30,18 @@ view,scroll-view,text,block{
 }
 
 .artical-action-mid {
+  margin-top: 16rpx;
   /* width: 100%; */
-  height: 90%;
-  position: absolute;
-  left: 0px;
-  top: 150rpx;
-  border-radius: 20px;
+  height: 88vh;
+  position: relative;
+  /* left: 0px; */
+  /* top: 150rpx; */
+  /* border-radius: 20px; */
   overflow: scroll;
 }
 
 .txt-container {
+  overflow: hidden;
   width: 100%;
   height: 100%;
   position: absolute;
@@ -49,16 +51,18 @@ view,scroll-view,text,block{
 
 .cname {
   font-size: 25rpx;
-  margin: 90rpx 20rpx;
+  margin: 6vh 0 0 20rpx;
+  height: 2vh;
   font-weight: 400;
   color: rgba(0, 0, 0, 0.3);
 }
 
 .pages {
   font-size: 22rpx;
-  position: absolute;
-  left: 20rpx;
-  bottom: 10rpx;
+  padding: 0 0 10rpx 20rpx;
+  /* position: absolute; */
+  /* left: 20rpx; */
+  /* bottom: 10rpx; */
   color: rgba(0, 0, 0, 0.3);
 }
 .chapters{

@@ -8,8 +8,11 @@ var clientW = '';
 var clientY = '';
 var novelId = 0;
 var chapterId = 0;
-var page = 1;
+var page = 1; // 目录分页
+var lastPage = {}; // 上一章数据
 var _this = '';
+var readPage = {}; // 当前阅读页面
+var fromMark = true;
 
 Page({
   data: {
@@ -78,6 +81,7 @@ Page({
         })
       }
     })
+    readPage = wx.getStorageSync('readPage') || {};
     wx.getSystemInfo({
       success: function (res) {
         clientW = res.screenWidth;
@@ -85,10 +89,15 @@ Page({
       }
     });
 
+
     novelId = options.novel_id;
     chapterId = options.chapter_id;
 
-    this.getContent(novelId, chapterId);
+    this.getContent(novelId, chapterId);  
+
+    wx.setKeepScreenOn({
+      keepScreenOn: true
+    })
   },
   //事件处理函数
   //字体变大
@@ -211,6 +220,7 @@ Page({
       }
       this.getContent(novelId, chapterId);
     } else {
+      this.countTotalPage('pre');
       this.setData({
         tx: this.data.tx + 100,
         currentPage: this.data.currentPage - 1
@@ -221,15 +231,19 @@ Page({
   //下一页
   nextPage: function () {
     if (this.data.currentPage >= this.data.totalPage) {
+      lastPage.chapterId =  chapterId;
+      lastPage.totalPage =  this.data.totalPage;
       chapterId++;
       this.getContent(novelId, chapterId);
     } else {
-      this.countTotalPage();
+      this.countTotalPage('next');
       this.setData({
         tx: this.data.tx - 100,
         currentPage: this.data.currentPage + 1
       })
     }
+
+    // 预加载
     if (this.data.currentPage >= this.data.totalPage / 2 && this.data.currentPage != 0) {
       let pre_chap = parseInt(chapterId) + 1;
       if (!wx.getStorageSync('n_' + novelId + '_' + pre_chap)) {
@@ -346,22 +360,38 @@ Page({
     content = content.replace(/“/g, '"');
     content = content.replace(/”/g, '"');
     // content = ' &emsp;&emsp;' + content;
+
+    let tx = 0;
+    let currentPage = 1;
+    if(JSON.stringify(lastPage) != '{}' && chapterId == lastPage.chapterId){ // 处理返回上一章，跳回最后页面
+      tx = _this.data.tx - 100 * (lastPage.totalPage - 1);
+      currentPage = lastPage.totalPage;
+      lastPage = {};
+    }
+
+    if(fromMark == true && novelId in readPage && readPage[novelId].c_id == chapterId){
+      tx = _this.data.tx - 100 * (parseInt(readPage[novelId].page) - 1);
+      currentPage =  readPage[novelId].page;
+    }
+
     _this.setData({
       tx_time: 0,
       content: content,
       cname: data.chapter.name,
-      currentPage: 0,
+      currentPage: 1,
       totalPage: 0,
-      tx: 0,
+      tx: tx,
       totalChap: data.novel.last_chapter_id
     })
+
     _this.updateMark();
     setTimeout(() => {
       _this.setData({
-        currentPage: 1,
+        tx:tx,
+        currentPage: currentPage,
         tx_time: 0.5,
       })
-      _this.countTotalPage(true);
+      _this.countTotalPage('init');
     }, 100);
   },
   /**
@@ -486,20 +516,27 @@ Page({
     this.getChapList(page, this.data.orderBy);
   },
   //获取总页码，有瑕疵--点太快，transition,没执行完，剩余宽度变多
-  countTotalPage: function (init = false) {
+  countTotalPage: function (from = 'init') {
     var _this = this;
-    setTimeout(()=>{
-      wx.createSelectorQuery().select('.artical-action-mid').scrollOffset(function (rect) {
-        scrollW = rect.scrollWidth; //获取滚动条宽度
-        var pages = Math.round(scrollW / clientW);
-        if (init !== true) {
-          pages--;
-        }
-        _this.setData({
-          totalPage: pages + _this.data.currentPage - 1,
-        })
-      }).exec()
-    },600)
+    wx.createSelectorQuery().select('.artical-action-mid').scrollOffset(function (rect) {
+      scrollW = rect.scrollWidth; //获取滚动条宽度
+      var pages = Math.round(scrollW / clientW);
+      if (from == 'next') {
+        pages--;
+      }
+      if (from == 'pre') {
+        pages++;
+      }
+      _this.setData({
+        totalPage: pages + _this.data.currentPage - 1,
+      })
+
+      //记录当前阅读页面
+      readPage[novelId] = {};
+      readPage[novelId]['page'] = _this.data.currentPage;
+      readPage[novelId]['c_id'] = chapterId;
+      wx.setStorageSync('readPage', readPage);
+    }).exec()
   },
   goBack: function () {
     wx.navigateBack({

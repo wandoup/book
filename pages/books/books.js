@@ -12,15 +12,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    books: [
-      {
-        img: '',
-        aname: '',
-        novel_id: '',
-        chapter_id: '',
-        status:''
-      },
-    ],
+    books: [],
     isShow: [
       "display: none"
     ],
@@ -176,8 +168,7 @@ Page({
             }else{
               status = row.novel.last_chapter_id - row.chapter_id + '章未读'
             }
-            res.data.data[i].novel && than.setData({
-              loading:false,
+            res.data.data[i].novel && than.setData({              
               ['books[' + i + '].img']:
                 res.data.data[i].novel.cover.replace(/http:/g, 'https:'),
               ['books[' + i + '].aname']:
@@ -190,6 +181,7 @@ Page({
             })
           }
           than.setData({
+            loading:false,
             isShow: "display: block"
           })
         }
