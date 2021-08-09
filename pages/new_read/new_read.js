@@ -244,7 +244,7 @@ Page({
     }
 
     // 预加载
-    if (this.data.currentPage >= this.data.totalPage / 2 && this.data.currentPage != 0) {
+    if (this.data.currentPage >= this.data.totalPage / 2 && this.data.totalPage != 0) {
       let pre_chap = parseInt(chapterId) + 1;
       if (!wx.getStorageSync('n_' + novelId + '_' + pre_chap)) {
         this.getContent(novelId, pre_chap, true);
@@ -331,6 +331,15 @@ Page({
             _this.parseNovelData(res.data.data);
           }
           wx.setStorageSync(n_key, res.data.data)
+          // 存储所有小说key,作过期用
+          let keys = wx.getStorageSync('keys') || [];
+          let obj = {
+            k: n_key,
+            t: Date.parse(new Date()) / 1000
+          }
+          keys.push(obj);
+          wx.setStorageSync('keys', keys)
+          _this.storageExpire();
         } else {
           preLoad === false && wx.showModal({
             title: '请求错误',
@@ -340,7 +349,7 @@ Page({
         }
       },
       fail: function (res) {
-        wx.showModal({
+        preLoad === false && wx.showModal({
           title: '网络错误',
           content: '网络出错，请刷新重试',
           showCancel: false
@@ -550,5 +559,22 @@ Page({
   nextChap: function () {
     chapterId++;
     this.getContent(novelId, chapterId);
+  },
+  /**
+   * 缓存过期处理
+   */
+  storageExpire(){
+    let keys = wx.getStorageSync('keys') || [];
+    let time = Date.parse(new Date()) / 1000;
+    for(let i= keys.length - 3; i >= 0; i--){
+      if(time - keys[i].t > 86400){
+        let k = keys[i].k
+        wx.removeStorage({
+          key:k
+        })
+        keys.splice(i,1);
+      }
+    }
+    wx.setStorageSync('keys', keys)
   }
 })

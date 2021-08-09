@@ -32,6 +32,15 @@ App({
       }
     })
 
+    // 缓存处理
+    wx.getStorageInfo({
+      success (res) {
+        if(res.currentSize > res.limitSize * 0.8){
+          wx.clearStorageSync()
+        }
+      }
+    })
+
   },
   // 监听token属性
   watch: function (method) {
