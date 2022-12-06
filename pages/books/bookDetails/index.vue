@@ -1,7 +1,27 @@
 <template>
 	<view class="book_details_page">
 		<view class="book_details_page_info">
-			
+			<view class="info">
+				<view class="info_image">
+					<image class="image" src="../../../static/logo.jpeg" mode="widthFix"></image>
+				</view>
+				<view class="info_text">
+					<view class="name">
+						XXXXXXX
+					</view>
+					<view class="author">
+						XXXXXXXX
+					</view>
+				</view>
+			</view>
+			<view class="details">
+				XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+				XXXXXXXXXXXXXX
+				XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+				XXXXXXXXXXXXXX
+				XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+				XXXXXXXXXXXXXXXXXXXXXXX
+			</view>
 		</view>
 		<view class="book_details_page_button">
 			<view class="book_details_page_button_list">
@@ -40,7 +60,34 @@
 
 <style lang="scss">
 	.book_details_page{
-		&_info{}
+		&_info{
+			padding: 50rpx 30rpx;
+			.info{
+				display: flex;
+				&_image{
+					width: 120rpx;
+					margin-right: 20rpx;
+					.image{
+						width: 120rpx;
+					}
+				}
+				
+				&_text{
+					flex: 1;
+					.name{
+						font-size: 28rpx;
+					}
+					.author{
+						margin-top: 10rpx;
+						font-size: 24rpx;
+						color: #82848a;
+					}
+				}
+			}
+			.details{
+				margin-top: 30rpx;
+			}
+		}
 		&_button{
 			width: 100%;
 			height: calc(120rpx + env(safe-area-inset-bottom));

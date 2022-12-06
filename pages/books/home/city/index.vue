@@ -14,7 +14,7 @@
 		<view class="city_page_list">
 			<view class="li" @tap="naviDetails">
 				<view class="li_image">
-					<image class="image" src="../../../../static/logo.png" mode=""></image>
+					<image class="image" src="../../../../static/logo.jpeg" mode=""></image>
 				</view>
 				<view class="li_text">
 					<view class="li_text_name">

@@ -16,25 +16,31 @@
 	export default {
 		data() {
 			return {
-				value: 'book',
-				list:[
-					{
-						name:	'book',
-						text:	'书架',
-						icon:	'home',
-					},
-					{
-						name:	'city',
-						text:	'书城',
-						icon:	'photo',
-					},
-					{
-						name:	'mine',
-						text:	'我的',
-						icon:	'account',
-					}
-				]
+				value: this.tabBarShow,
 			}
+		},
+		props:{
+			list: {
+				type: Array,
+				default () {
+					return [
+						{
+							name:	'list',
+							text:	'列表',
+							icon:	'list',
+						},
+						{
+							name:	'mine',
+							text:	'我的',
+							icon:	'account',
+						}
+					];
+				}
+			},
+			tabBarShow: {
+				type: String,
+				default: 'list'
+			},
 		},
 		methods:{
 			//	切换事件
