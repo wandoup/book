@@ -4,6 +4,7 @@
 			:value="value"
 			@change="change"
 			:fixed="true"
+			:zIndex="999"
 			:placeholder="true"
 			:safeAreaInsetBottom="true"
 		>
@@ -26,7 +27,12 @@
 					return [
 						{
 							name:	'list',
-							text:	'列表',
+							text:	'待办',
+							icon:	'list-dot',
+						},
+						{
+							name:	'complete',
+							text:	'完成',
 							icon:	'list',
 						},
 						{
