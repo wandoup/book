@@ -49,8 +49,6 @@ Page({
       dataType: 'json',
       responseType: 'text',
       success: function (res) {
-        console.log('获取书籍成功')
-        console.log(res)
         if (res.data.data.length > 0) {
           than.data.books.splice(0, than.data.books.length)
           than.setData({
@@ -87,6 +85,13 @@ Page({
   gotodetails: function (e) {
     let id = e.currentTarget.dataset.bookid;
     let did = JSON.stringify(id);
+    let isChk = wx.getStorageSync('chk');
+    if (isChk == 1) {
+      wx.navigateTo({
+        url: '../read_c/read_c?novel_id=' + id + '&chapter_id=1&name=旅游攻略'
+      })
+      return;
+    }
     wx.navigateTo({
       url: '../details/details?bookid=' + did,
     })
@@ -113,8 +118,7 @@ Page({
       dataType: 'json',
       responseType: 'text',
       success: function (res) {
-        if (res.data.code = 1) {
-          console.log('获取书籍成功')
+        if (res.data.code == 1) {
           console.log(res)
           if (res.data.data!=null&&res.data.data.length > 0) {
             var j = than.data.books.length;
@@ -129,16 +133,6 @@ Page({
               })
               j++;
             }
-            // if (wx.pageScrollTo) {
-            //   wx.pageScrollTo({
-            //     scrollTop: 0
-            //   })
-            // } else {
-            //   wx.showModal({
-            //     title: '提示',
-            //     content: '当前微信版本过低，请升级到最新微信版本后重试。'
-            //   })
-            // }
           }else {
             wx.showToast({
               title: '此分类下暂无小说',

@@ -42,21 +42,6 @@ App({
     })
 
   },
-  // 监听token属性
-  watch: function (method) {
-    var obj = this.globalData;
-    Object.defineProperty(obj, "token", {
-      configurable: true,
-      enumerable: true,
-      set: function (value) {
-        this._token = value;
-        method(value);
-      },
-      get: function () {
-        return this._token
-      }
-    })
-  },
   // 登录
   getToken:function (fun = null, force = false) {
     var that = this;

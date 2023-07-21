@@ -34,7 +34,7 @@
         wx:if="{{item.img}}">
         </image>
         <text class="bookbox-text">{{item.aname}}</text>
-        <text class="read-status">{{item.status}}</text>
+        <text wx:if="{{item.status != ''}}" class="read-status">{{item.status}}</text>
     </view>
     <view class="bookadd" bindtap='gotoBookCity'>
         <image src="../../images/increase.png" class="bookadd-image"></image>

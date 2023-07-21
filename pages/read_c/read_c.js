@@ -94,9 +94,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var novelId = JSON.parse(options.novel_id);
-    var chapterId = JSON.parse(options.chapter_id);
-    var aname = JSON.parse(options.name);
+    console.log(options)
+    var novelId = options.novel_id;
+    var chapterId = options.chapter_id;
+    var aname = options.name;
     var than=this;
     var windowHeight = wx.getSystemInfoSync().windowHeight;
     num=0;

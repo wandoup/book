@@ -44,22 +44,25 @@ Page({
     })
     var than = this;
     wx.request({
-      url: 'https://api.ytool.top/api/search?=仙&=2',
+      url: 'https://api.ytool.top/api/search',
       data:{key:inputvalue},
       method: 'GET',
       dataType: 'json',
+      header: {
+        'content-type': 'application/json',
+          'token': wx.getStorageSync('token')
+      },
       responseType: 'text',
       success(res){
-        console.log('搜索成功')
-        console.log(res)
-        if (res.data.data.length > 0) {
-          for (var i = 0; i < res.data.data.length; i++) {
-            than.setData({
-              ['books[' + i + '].img']:
+        if(res.data.code == 1){
+          if (res.data.data.length > 0) {
+            for (var i = 0; i < res.data.data.length; i++) {
+              than.setData({
+                ['books[' + i + '].img']:
                 res.data.data[i].cover,
-              ['books[' + i + '].name']:
+                ['books[' + i + '].name']:
                 res.data.data[i].name,
-              ['books[' + i + '].author']:
+                ['books[' + i + '].author']:
                 res.data.data[i].author.name,
               ['books[' + i + '].id']:
               res.data.data[i].id,
@@ -69,6 +72,15 @@ Page({
             isShow: "display: block"
           })
         }
+        }else{
+          wx.showToast({
+            title: res.data.msg,
+            icon: 'fail',
+            duration: 1500,
+            mask: false,
+          });
+        }
+
       },
       fail: function (res) {
         console.log('搜索失败')

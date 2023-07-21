@@ -54,11 +54,9 @@ Page({
           responseType: 'text',
           header: header,
           success: function (res) {
-            console.log('移出书架成功')
             than.setData({
               delbox: false
             })
-            console.log(than.data.books)
             than.data.books.splice(than.data.books.length-1, 1)
             than.setData({
               books: than.data.books
@@ -158,17 +156,18 @@ Page({
           for (var i = 0; i < res.data.data.length; i++) {
             let row = res.data.data[i];
             let status = '';
-            
-            if(row.chapter_id == row.novel.last_chapter_id){
-              if(row.novel.is_over == 0){
-                status = '已读到最新章';
+            if(row.novel.last_chapter_id){
+              if( row.chapter_id == row.novel.last_chapter_id){
+                if(row.novel.is_over == 0){
+                  status = '已读到最新章';
+                }else{
+                  status = '已读完';
+                }
               }else{
-                status = '已读完';
+                status = row.novel.last_chapter_id - row.chapter_id + '章未读'
               }
-            }else{
-              status = row.novel.last_chapter_id - row.chapter_id + '章未读'
             }
-            res.data.data[i].novel && than.setData({              
+            res.data.data[i].novel && than.setData({
               ['books[' + i + '].img']:
                 res.data.data[i].novel.cover.replace(/http:/g, 'https:'),
               ['books[' + i + '].aname']:
