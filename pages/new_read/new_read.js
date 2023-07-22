@@ -13,6 +13,8 @@ var lastPage = {}; // 上一章数据
 var _this = '';
 var readPage = {}; // 当前阅读页面
 var fromMark = true;
+var closeScreenKeepOnTime = 300;
+var timer = null;
 
 Page({
   data: {
@@ -94,10 +96,20 @@ Page({
     chapterId = options.chapter_id;
 
     this.getContent(novelId, chapterId);  
-
+  },
+  onUnload: function() {
+    wx.setKeepScreenOn({
+      keepScreenOn: false
+    })
+    clearInterval(timer);
+    timer = null;
+  },
+  onShow: function() {
     wx.setKeepScreenOn({
       keepScreenOn: true
     })
+    closeScreenKeepOnTime = 300;
+    this.screenKeepOnCountDown();
   },
   //事件处理函数
   //字体变大
@@ -253,6 +265,8 @@ Page({
   },
   // 触摸开始事件
   touchStart: function (e) {
+    closeScreenKeepOnTime = 300;
+    this.screenKeepOnCountDown();
     touchDotx = e.touches[0].pageX; // 获取触摸时的原点
     touchDoty = e.touches[0].pageY; // 获取触摸时的原点
     // 使用js计时器记录时间
@@ -574,5 +588,20 @@ Page({
       }
     }
     wx.setStorageSync('keys', keys)
-  }
+  },
+  screenKeepOnCountDown(){
+    if (timer != null) {
+      return
+    }
+    timer = setInterval(() => {
+      closeScreenKeepOnTime--;
+      if (closeScreenKeepOnTime <= 0) {
+        wx.setKeepScreenOn({
+          keepScreenOn: false
+        })
+        clearInterval(timer);
+        timer = null;
+      }
+    }, 1000)
+  },
 })
