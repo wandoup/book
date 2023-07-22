@@ -95,6 +95,15 @@ view,scroll-view,text,block{
 .chap-info view:nth-child(1){
   font-weight: bold;
 }
+.chap-info-r{
+  display: flex;
+}
+.chap-info-r image{
+  width:45rpx;
+  height:45rpx;
+  padding:0 24rpx;
+  wxcs_style_padding:0 24rpx;
+}
 .list-con{
   height: 80%;
 }

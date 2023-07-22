@@ -498,6 +498,9 @@ Page({
           _this.setData({
             chap_list: chap_list
           })
+          setTimeout(() => {
+            _this.goCurrentChapter();
+          }, 100)
         } else {
           wx.showToast({
             title: res.data.msg,
@@ -603,5 +606,23 @@ Page({
         timer = null;
       }
     }, 1000)
+  },
+  goCurrentChapter() {
+    let currentChap = 0;
+    for (let i = 0; i < this.data.chap_list.length; i++) {
+      const chap = this.data.chap_list[i];
+      if (chap.now == true) {
+        currentChap = i;
+      }
+    }
+    let highPercent = currentChap / this.data.chap_list.length;
+    setTimeout(() => {
+      wx.createSelectorQuery().select('#chap-list').scrollOffset(function (res) {
+        let currentPos = res.scrollHeight * highPercent;
+        _this.setData({
+          scroll_top: currentPos
+        })
+      }, 100).exec()
+    })
   },
 })

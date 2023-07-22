@@ -31,10 +31,13 @@
   <view class="title">目录</view>
     <view class="chap-info">
       <view>共{{totalChap}}章</view>
-      <view bindtap="orderDesc" wx:if="{{orderBy == 'asc'}}">倒序</view>
-      <view bindtap="orderDesc" wx:if="{{orderBy == 'desc'}}">正序</view>
+      <view class="chap-info-r">
+        <image src="../../images/position.png" class="pos-img" bindtap="goCurrentChapter"></image>
+        <view bindtap="orderDesc" wx:if="{{orderBy == 'asc'}}">倒序</view>
+        <view bindtap="orderDesc" wx:if="{{orderBy == 'desc'}}">正序</view>
+      </view>
     </view>
-    <scroll-view scroll-y class="list-con" bindscrolltolower="moreChap" scroll-top="{{scroll_top}}">
+    <scroll-view scroll-y class="list-con" id="chap-list" bindscrolltolower="moreChap" scroll-top="{{scroll_top}}">
       <view class="tips">正文卷</view>
       <view wx:for="{{chap_list}}" wx:key="index"
             bindtap="selectChap"
