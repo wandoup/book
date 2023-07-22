@@ -35,7 +35,7 @@ Page({
     tx: 0,
     tx_menu: 100,
     mask_show: 'none',
-    tx_time: '0.5',
+    tx_time: '0',
     totalPage: 0,
     currentPage: 0,
     chap_list: [],
@@ -277,10 +277,10 @@ Page({
       if (touchDotx > clientW / 3 && touchDotx < clientW / 3 * 2 && touchDoty > clientY / 3 && touchDoty < clientY / 3 * 2) {
         this.midaction();
       }
-      if (touchDotx > clientW / 3 * 2 || (touchDotx > clientW / 3 * 1 && touchDoty > clientY / 3 * 2)) {
+      if (touchDotx > clientW / 3 * 2 || (touchDotx > clientW / 4 * 1 && touchDoty > clientY / 3 * 2)) {
         this.nextPage();
       }
-      if (touchDotx < clientW / 3 || (touchDotx < clientW / 3 * 1 && touchDoty < clientY / 3 * 2)) {
+      if (touchDotx < clientW / 3 || (touchDotx < clientW / 4 * 1 && touchDoty < clientY / 3 * 2)) {
         this.lastPage();
       }
     } else {
@@ -384,7 +384,6 @@ Page({
     }
 
     _this.setData({
-      tx_time: 0,
       content: content,
       cname: data.chapter.name,
       currentPage: 1,
@@ -398,7 +397,6 @@ Page({
       _this.setData({
         tx:tx,
         currentPage: currentPage,
-        tx_time: 0.5,
       })
       _this.countTotalPage('init');
     }, 100);
